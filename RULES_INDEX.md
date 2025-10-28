@@ -312,8 +312,8 @@ new:true trending:true
 
 ### Repository Overview
 - **Total Rules:** 3
-- **Total Contributors:** 156
-- **Total Reactions:** 45,678
+- **Total Contributors:** 0
+- **Total Reactions:** 0
 - **Average Rating:** 3.2 stars
 - **Active Categories:** 10
 
