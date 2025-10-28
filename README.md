@@ -25,9 +25,6 @@ Browse our organized categories:
 - [**Coding Assistants**](./rules/coding/) - Rules for development workflows
 - [**Content Creation**](./rules/content/) - Writing, documentation, and creative tasks
 - [**Data Analysis**](./rules/data-analysis/) - Data processing and insights
-- [**Customer Support**](./rules/customer-support/) - Help desk and user assistance
-- [**Project Management**](./rules/project-management/) - Planning and coordination
-- [**Research & Learning**](./rules/research/) - Information gathering and analysis
 
 ### Using a Rule
 1. Browse the [Table of Contents](#-table-of-contents) below
@@ -60,26 +57,24 @@ We use GitHub reactions to rate rules:
 | Rule Name | Description | Rating | Author |
 |-----------|-------------|--------|--------|
 | [Smart Code Reviewer](./rules/coding/smart-code-reviewer/) | Automated code review with best practices | ⭐⭐⭐⭐⭐ | [@avalus](https://github.com/avalus) |
-| [Bug Hunter Pro](./rules/coding/bug-hunter-pro/) | Advanced debugging and error detection | ⭐⭐⭐⭐ | [@debug-master](https://github.com/debug-master) |
 
 ### ✍️ Content Creation  
 | Rule Name | Description | Rating | Author |
 |-----------|-------------|--------|--------|
 | [Technical Writer](./rules/content/technical-writer/) | Generate clear technical documentation | ⭐⭐⭐⭐⭐ | [@avalus](https://github.com/avalus) |
-| [Social Media Manager](./rules/content/social-media-manager/) | Create engaging social media content | ⭐⭐⭐⭐ | [@social-guru](https://github.com/social-guru) |
 
 ### 📊 Data Analysis
 | Rule Name | Description | Rating | Author |
 |-----------|-------------|--------|--------|
-| [Data Insights Generator](./rules/data-analysis/insights-generator/) | Extract meaningful insights from datasets | ⭐⭐⭐⭐ | [@avalus](https://github.com/avalus) |
+| [Data Insights Generator](./rules/data-analysis/insights-generator/) | Extract meaningful insights from datasets | ⭐⭐⭐⭐⭐ | [@avalus](https://github.com/avalus) |
 
 *[View all rules →](./RULES_INDEX.md)*
 
 ## 🏆 Featured Rules This Month
 
-- 🥇 **[Smart Code Reviewer](./rules/coding/smart-code-reviewer/)** - 847 👍, 234 ❤️, 156 🚀
-- 🥈 **[Technical Writer](./rules/content/technical-writer/)** - 723 👍, 189 ❤️, 134 🚀  
-- 🥉 **[Data Insights Generator](./rules/data-analysis/insights-generator/)** - 612 👍, 167 ❤️, 98 🚀
+- 🥇 **[Smart Code Reviewer](./rules/coding/smart-code-reviewer/)** - 0 👍, 0 ❤️, 0 🚀
+- 🥈 **[Technical Writer](./rules/content/technical-writer/)** - 0 👍, 0 ❤️, 0 🚀  
+- 🥉 **[Data Insights Generator](./rules/data-analysis/insights-generator/)** - 0 👍, 0 ❤️, 0 🚀
 
 ## 🤝 Contributing
 
