@@ -298,7 +298,9 @@ jobs:
           async function getRuleReactions(owner, repo, filePath) {
             try {
               const ruleKey = filePath.replace('rules/', '').replace('/README.md', '');
-              console.log(`Fetching reactions for rule: ${ruleKey}`);
+              const ruleName = ruleKey.split('/').pop(); // e.g., "smart-code-reviewer"
+              const ruleCategory = ruleKey.split('/')[0]; // e.g., "coding"
+              console.log(`Fetching reactions for rule: ${ruleKey} (name: ${ruleName}, category: ${ruleCategory})`);
               
               let totalReactions = {
                 thumbsUp: 0,
@@ -432,8 +434,37 @@ jobs:
                 const discussionResult = await octokit.graphql(discussionQuery, { owner, repo });
                 
                 for (const discussion of discussionResult.repository.discussions.nodes) {
-                  if (discussion.title.toLowerCase().includes(ruleKey.toLowerCase()) || 
-                      discussion.body.toLowerCase().includes(ruleKey.toLowerCase())) {
+                  // Enhanced matching logic for discussions
+                  const titleLower = discussion.title.toLowerCase();
+                  const bodyLower = discussion.body.toLowerCase();
+                  const ruleKeyLower = ruleKey.toLowerCase();
+                  const ruleNameLower = ruleName.toLowerCase();
+                  const ruleCategoryLower = ruleCategory.toLowerCase();
+                  
+                  // Multiple matching strategies:
+                  // 1. Exact rule key match (e.g., "coding/smart-code-reviewer")
+                  // 2. Rule name match (e.g., "smart-code-reviewer" or "Smart Code Reviewer")
+                  // 3. Formatted rule name match (e.g., "Smart Code Reviewer")
+                  // 4. Discussion title patterns (e.g., "Rate: Smart Code Reviewer", "[Rating] Smart Code Reviewer")
+                  const formattedRuleName = ruleName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                  
+                  const isRuleMatch = 
+                    titleLower.includes(ruleKeyLower) ||
+                    bodyLower.includes(ruleKeyLower) ||
+                    titleLower.includes(ruleNameLower) ||
+                    bodyLower.includes(ruleNameLower) ||
+                    titleLower.includes(formattedRuleName.toLowerCase()) ||
+                    bodyLower.includes(formattedRuleName.toLowerCase()) ||
+                    // Pattern matching for rating discussions
+                    titleLower.includes(`rate: ${formattedRuleName.toLowerCase()}`) ||
+                    titleLower.includes(`rating: ${formattedRuleName.toLowerCase()}`) ||
+                    titleLower.includes(`[rating] ${formattedRuleName.toLowerCase()}`) ||
+                    titleLower.includes(`rate ${formattedRuleName.toLowerCase()}`) ||
+                    // Category-based matching as fallback
+                    (titleLower.includes(ruleCategoryLower) && titleLower.includes(ruleNameLower));
+                  
+                  if (isRuleMatch) {
+                    console.log(`Found matching discussion: "${discussion.title}" for rule: ${ruleKey}`);
                     
                     // Process discussion reactions
                     for (const reaction of discussion.reactions.nodes) {
@@ -447,9 +478,18 @@ jobs:
                       totalReactions.total++;
                     }
 
-                    // Process comment reactions
+                    // Process comment reactions with enhanced matching
                     for (const comment of discussion.comments.nodes) {
-                      if (comment.body.toLowerCase().includes(ruleKey.toLowerCase())) {
+                      const commentBodyLower = comment.body.toLowerCase();
+                      
+                      // Use same enhanced matching logic for comments
+                      const isCommentMatch = 
+                        commentBodyLower.includes(ruleKeyLower) ||
+                        commentBodyLower.includes(ruleNameLower) ||
+                        commentBodyLower.includes(formattedRuleName.toLowerCase());
+                      
+                      if (isCommentMatch) {
+                        console.log(`Found matching comment in discussion: "${discussion.title}" for rule: ${ruleKey}`);
                         for (const reaction of comment.reactions.nodes) {
                           switch (reaction.content) {
                             case 'THUMBS_UP': totalReactions.thumbsUp++; break;
