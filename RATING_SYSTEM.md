@@ -10,12 +10,15 @@ RuleBase uses GitHub's native reaction system to let the community rate AI agent
 
 ### Rating Rules
 
-Every rule in RuleBase can be rated using GitHub reactions on the rule's README file. Simply navigate to any rule's README and use the reaction buttons to express your experience:
+Every rule in RuleBase can be rated using GitHub reactions on the rule's README file. We've made this process easier with direct rating buttons:
 
 1. **Navigate to a rule** - Browse to any rule's README.md file
-2. **Scroll to the Community Rating section** - Find the rating area in each README
-3. **Click the reaction button** - Choose the reaction that best represents your experience
-4. **Your rating is recorded** - GitHub automatically tracks your reaction
+2. **Click the "Rate This Rule" button** - Look for the prominent blue button in the Community Rating section
+3. **Use GitHub's reaction interface** - Scroll to the bottom of the GitHub page and click the emoji button (😊)
+4. **Choose your reaction** - Select the reaction that best represents your experience
+5. **Your rating is recorded** - GitHub automatically tracks your reaction
+
+**Alternative method:** You can also rate by navigating directly to the rule's README on GitHub and using the native reaction buttons at the bottom of the page.
 
 ### Reaction Meanings
 

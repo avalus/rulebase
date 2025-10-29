@@ -12,9 +12,19 @@ An AI agent rule that performs comprehensive code reviews with focus on security
 
 ## ⭐ Community Rating
 
-Rate this rule using GitHub reactions:
-- 👍 **847** - Works great, recommended!
-- ❤️ **234** - Love this rule, essential for workflow
-- 🚀 **189** - Game-changer, significantly improved productivity
-- 👀 **67** - Interesting, want to try this
-- 😕 **8** - Needs improvement or clarification
+**[👍 Rate This Rule on GitHub →](https://github.com/avalus/rulebase/blob/main/rules/coding/smart-code-reviewer/README.md)**
+
+*Click the link above, then use GitHub's reaction buttons (😊) at the bottom of the page to rate this rule!*
+
+Current community ratings:
+- 👍 - Works great, recommended!
+- ❤️ - Love this rule, essential for workflow
+- 🚀 - Game-changer, significantly improved productivity
+- 👀 - Interesting, want to try this
+- 😕 - Needs improvement or clarification
+
+### How to Rate:
+1. Click the "Rate This Rule" button above
+2. Scroll to the bottom of the GitHub page
+3. Click the reaction emoji button (😊)
+4. Choose your rating: 👍 ❤️ 🚀 👀 😕
