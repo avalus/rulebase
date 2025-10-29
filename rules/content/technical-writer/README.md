@@ -12,19 +12,19 @@ An AI agent rule that creates clear, comprehensive technical documentation. Tran
 
 ## ⭐ Community Rating
 
-**[👍 Rate This Rule on GitHub →](https://github.com/avalus/rulebase/blob/main/rules/content/technical-writer/README.md)**
+**[👍 Rate This Rule in GitHub Discussions →](https://github.com/avalus/rulebase/discussions)**
 
-*Click the link above, then use GitHub's reaction buttons (😊) at the bottom of the page to rate this rule!*
-
-Current community ratings:
-- 👍 - Works great, recommended!
-- ❤️ - Love this rule, essential for workflow
-- 🚀 - Game-changer, significantly improved productivity
-- 👀 - Interesting, want to try this
-- 😕 - Needs improvement or clarification
+*Click the link above to join the discussion for this rule and add your reaction rating!*
 
 ### How to Rate:
 1. Click the "Rate This Rule" button above
-2. Scroll to the bottom of the GitHub page
-3. Click the reaction emoji button (😊)
-4. Choose your rating: 👍 ❤️ 🚀 👀 😕
+2. Find or create a discussion thread for "Technical Writer"
+3. Add your reaction to the discussion post: 👍 ❤️ 🚀 👀 😕
+4. Optionally, leave a comment with your experience
+
+### Rating Meanings:
+- 👍 **Thumbs Up** - Works great, recommended!
+- ❤️ **Heart** - Love this rule, essential for workflow
+- 🚀 **Rocket** - Game-changer, significantly improved productivity
+- 👀 **Eyes** - Interesting, want to try this
+- 😕 **Confused** - Needs improvement or clarification

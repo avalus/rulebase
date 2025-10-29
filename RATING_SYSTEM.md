@@ -1,24 +1,29 @@
 # 📊 RuleBase Rating System
 
-> How we use GitHub reactions to rate and discover the best AI agent rules
+> **How community ratings work and how to rate rules effectively**
 
-## 🌟 Overview
+Welcome to the RuleBase rating system! Our community-driven approach helps developers discover the best AI agent rules through GitHub's native reaction system. This guide explains how ratings work, how to rate rules, and how to interpret community feedback.
 
-RuleBase uses GitHub's native reaction system to let the community rate AI agent rules. This approach is simple, transparent, and leverages GitHub's existing infrastructure while providing meaningful insights into rule quality and usefulness.
+## 🎯 Quick Start: How to Rate a Rule
 
-## 🎯 How It Works
+### Method 1: Using GitHub Discussions (Recommended)
 
-### Rating Rules
+1. **Navigate to a rule** you want to rate (e.g., [Smart Code Reviewer](./rules/coding/smart-code-reviewer/))
+2. **Click the "Rate This Rule in GitHub Discussions" button** in the Community Rating section
+3. **Find or create a discussion thread** for that specific rule
+4. **Add your reaction** to the discussion post: 👍 ❤️ 🚀 👀 😕
+5. **Optionally leave a comment** with your experience and feedback
 
-Every rule in RuleBase can be rated using GitHub reactions on the rule's README file. We've made this process easier with direct rating buttons:
+### Method 2: Using GitHub Issues (Alternative)
 
-1. **Navigate to a rule** - Browse to any rule's README.md file
-2. **Click the "Rate This Rule" button** - Look for the prominent blue button in the Community Rating section
-3. **Use GitHub's reaction interface** - Scroll to the bottom of the GitHub page and click the emoji button (😊)
-4. **Choose your reaction** - Select the reaction that best represents your experience
-5. **Your rating is recorded** - GitHub automatically tracks your reaction
+If discussions aren't available, you can also rate rules through GitHub Issues:
 
-**Alternative method:** You can also rate by navigating directly to the rule's README on GitHub and using the native reaction buttons at the bottom of the page.
+1. **Go to the [Issues tab](https://github.com/avalus/rulebase/issues)** of the repository
+2. **Find or create an issue** for the rule you want to rate
+3. **Add your reaction** to the issue: 👍 ❤️ 🚀 👀 😕
+4. **Share your experience** in the issue comments
+
+*Note: GitHub reactions are only available on issues, pull requests, discussions, and their comments - not on regular files.*
 
 ### Reaction Meanings
 
@@ -210,9 +215,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            // Fetch reactions from all rule READMEs
-            // Calculate quality scores
-            // Update rating displays
+            // Fetch reactions from GitHub Discussions and Issues
+            // Calculate quality scores for each rule
+            // Update rating displays in README files
 ```
 
 **Generate Rating Reports**
@@ -232,11 +237,33 @@ const octokit = new Octokit({
   auth: 'your-token'
 });
 
-// Get reactions for a specific rule
+// Get reactions for a specific rule discussion
 const reactions = await octokit.rest.reactions.listForIssue({
   owner: 'avalus',
   repo: 'rulebase',
-  issue_number: 123  // Rule's README issue/PR number
+  issue_number: 123  // Discussion or Issue number for the rule
+});
+
+// Or get reactions from discussions
+const discussionReactions = await octokit.graphql(`
+  query($owner: String!, $repo: String!, $discussionNumber: Int!) {
+    repository(owner: $owner, name: $repo) {
+      discussion(number: $discussionNumber) {
+        reactions(first: 100) {
+          nodes {
+            content
+            user {
+              login
+            }
+          }
+        }
+      }
+    }
+  }
+`, {
+  owner: 'avalus',
+  repo: 'rulebase',
+  discussionNumber: 123
 });
 ```
 

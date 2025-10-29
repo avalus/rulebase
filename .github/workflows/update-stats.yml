@@ -218,15 +218,16 @@ jobs:
                   const displayName = ruleDisplayNames[ruleKey];
                   if (!displayName) continue;
                   
-                  // Update Community Impact section - simplified pattern matching
-                  // Pattern: - 👍 **847** | ❤️ **234** | 🚀 **156** | 👀 **45** | 😕 **12**
+                  // Update Community Impact section - robust pattern matching
+                  // Handles both correct format: - 👍 **847** | ❤️ **234** | 🚀 **156** | 👀 **45** | 😕 **12**
+                  // And corrupted format: 0** | ❤️ **234** | 🚀 **156** | 👀 **45** | 😕 **12**
                   const reactionPattern = new RegExp(
-                    `(- 👍 \\*\\*)(\\d+)(\\*\\* \\| ❤️ \\*\\*)(\\d+)(\\*\\* \\| 🚀 \\*\\*)(\\d+)(\\*\\* \\| 👀 \\*\\*)(\\d+)(\\*\\* \\| 😕 \\*\\*)(\\d+)(\\*\\*)`,
+                    `(?:- 👍 \\*\\*\\d+\\*\\* \\| ❤️ \\*\\*\\d+\\*\\* \\| 🚀 \\*\\*\\d+\\*\\* \\| 👀 \\*\\*\\d+\\*\\* \\| 😕 \\*\\*\\d+\\*\\*|\\d+\\*\\* \\| ❤️ \\*\\*\\d+\\*\\* \\| 🚀 \\*\\*\\d+\\*\\* \\| 👀 \\*\\*\\d+\\*\\* \\| 😕 \\*\\*\\d+\\*\\*)`,
                     'g'
                   );
                   
                   hallOfFameContent = hallOfFameContent.replace(reactionPattern, 
-                    `$1${metrics.thumbsUp}$3${metrics.heart}$5${metrics.rocket}$7${metrics.eyes}$9${metrics.confused}$11`
+                    `- 👍 **${metrics.thumbsUp}** | ❤️ **${metrics.heart}** | 🚀 **${metrics.rocket}** | 👀 **${metrics.eyes}** | 😕 **${metrics.confused}**`
                   );
                   
                   // Pattern: - **1,294 total community reactions** with 96% positive feedback
