@@ -5,9 +5,9 @@ Welcome to the Rulebase Hall of Fame! This showcases our most popular and effect
 ## 📊 Community Overview
 
 Our community has provided <!-- OVERALL_TOTAL_START -->
-0+ total community reactions
+2+ total community reactions
 <!-- OVERALL_TOTAL_END --> across all rules, with <!-- OVERALL_FEEDBACK_START -->
-0% average positive feedback
+100% average positive feedback
 <!-- OVERALL_FEEDBACK_END -->
 
 ## 🌟 Featured Rules
@@ -18,8 +18,8 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 **Path:** `rules/coding/smart-code-reviewer/`
 
 <!-- RULE_STATS_START:coding/smart-code-reviewer -->
-- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
-- **0 total community reactions** - *Help us by sharing your experience!*
+- 👍 **0** | 👎 **0** | ❤️ **1** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
+- **1 total community reactions**
 <!-- RULE_STATS_END:coding/smart-code-reviewer -->
 
 **Perfect for:** Security audits, performance optimization, code quality improvements
@@ -32,7 +32,6 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 **Path:** `rules/content/technical-writer/`
 
 <!-- RULE_STATS_START:content/technical-writer -->
-- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
 - 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
 - **0 total community reactions** - *Help us by sharing your experience!*
 <!-- RULE_STATS_END:content/technical-writer -->
@@ -47,8 +46,8 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 **Path:** `rules/data-analysis/insights-generator/`
 
 <!-- RULE_STATS_START:data-analysis/insights-generator -->
-- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
-- **0 total community reactions** - *Help us by sharing your experience!*
+- 👍 **1** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
+- **1 total community reactions**
 <!-- RULE_STATS_END:data-analysis/insights-generator -->
 
 **Perfect for:** Business intelligence, data visualization, trend analysis
