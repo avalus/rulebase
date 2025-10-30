@@ -14,7 +14,7 @@ async function updateStats() {
   try {
     // Check if running in GitHub Actions environment
     if (!process.env.GITHUB_REPOSITORY) {
-      console.log('⚠️ GITHUB_REPOSITORY environment variable not set. Running in local mode.');
+      console.log('⚠️  GITHUB_REPOSITORY environment variable not set. Running in local mode.');
       console.log('This script is designed to run in GitHub Actions environment.');
       console.log('For local testing, use the test files instead.');
       return;
@@ -55,7 +55,7 @@ async function updateStats() {
         // Use default reaction counts if API fails
         const ruleKey = RuleScanner.getRuleKeyFromPath(rulePath);
         ruleReactions[ruleKey] = {
-          thumbsUp: 0, heart: 0, rocket: 0, eyes: 0, confused: 0,
+          thumbsUp: 0, thumbsDown: 0, heart: 0, rocket: 0, eyes: 0, confused: 0, laugh: 0, hooray: 0,
           total: 0, positivePercentage: 0
         };
       }

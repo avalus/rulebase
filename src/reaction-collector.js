@@ -43,19 +43,22 @@ class ReactionCollector {
       
       let totalReactions = {
         thumbsUp: 0,
+        thumbsDown: 0,
         heart: 0,
         rocket: 0,
         eyes: 0,
         confused: 0,
+        laugh: 0,
+        hooray: 0,
         total: 0
       };
 
       // Strategy 1: Search for issues/PRs that mention this rule
       const searchQueries = [
-        `repo:${owner}/${repo} "${ruleKey}" in:body`,
-        `repo:${owner}/${repo} "${filePath}" in:body`,
         `repo:${owner}/${repo} "${ruleName}" in:title`,
-        `repo:${owner}/${repo} "${ruleName}" in:body`
+        `repo:${owner}/${repo} "${ruleName}" in:body`,
+        `repo:${owner}/${repo} "${folderName}" in:body`,
+        `repo:${owner}/${repo} "rules/${ruleKey}" in:body`
       ];
 
       for (const query of searchQueries) {
@@ -139,9 +142,14 @@ class ReactionCollector {
         const discussionData = await this.githubAPI.graphql(discussionQuery, { owner, repo });
         
         if (discussionData.repository?.discussions?.nodes) {
+          // Define lowercase variables for comparison
+          const ruleKeyLower = ruleKey.toLowerCase();
+          const ruleNameLower = ruleName.toLowerCase();
+          const folderNameLower = folderName.toLowerCase();
+          
           for (const discussion of discussionData.repository.discussions.nodes) {
             // Check if discussion mentions the rule (only check for complete rule name in title)
-            const mentionsRule = discussion.title.toLowerCase().includes(ruleName.toLowerCase());
+            const mentionsRule = discussion.title.toLowerCase().includes(ruleNameLower);
             
             if (mentionsRule) {
               // Add discussion reactions
@@ -172,7 +180,7 @@ class ReactionCollector {
       }
 
       // Calculate positive percentage
-      const positiveReactions = totalReactions.thumbsUp + totalReactions.heart + totalReactions.rocket + totalReactions.eyes;
+      const positiveReactions = totalReactions.thumbsUp + totalReactions.heart + totalReactions.rocket + totalReactions.eyes + totalReactions.laugh + totalReactions.hooray;
       totalReactions.positivePercentage = totalReactions.total > 0 
         ? Math.round((positiveReactions / totalReactions.total) * 100) 
         : 0;
@@ -184,7 +192,7 @@ class ReactionCollector {
       console.error(`Error fetching reactions for ${filePath}:`, error);
       // Return default reaction counts if API fails
       return {
-        thumbsUp: 0, heart: 0, rocket: 0, eyes: 0, confused: 0,
+        thumbsUp: 0, thumbsDown: 0, heart: 0, rocket: 0, eyes: 0, confused: 0, laugh: 0, hooray: 0,
         total: 0, positivePercentage: 0
       };
     }
@@ -194,24 +202,46 @@ class ReactionCollector {
    * Helper method to add a reaction to the total count
    */
   _addReaction(totalReactions, reactionContent) {
+    console.log(`Processing reaction: ${reactionContent}`);
     switch (reactionContent) {
       case '+1': 
         totalReactions.thumbsUp++; 
+        console.log(`Added thumbs up, new count: ${totalReactions.thumbsUp}`);
+        break;
+      case '-1': 
+        totalReactions.thumbsDown++; 
+        console.log(`Added thumbs down, new count: ${totalReactions.thumbsDown}`);
         break;
       case 'heart': 
         totalReactions.heart++; 
+        console.log(`Added heart, new count: ${totalReactions.heart}`);
         break;
       case 'rocket': 
         totalReactions.rocket++; 
+        console.log(`Added rocket, new count: ${totalReactions.rocket}`);
         break;
       case 'eyes': 
         totalReactions.eyes++; 
+        console.log(`Added eyes, new count: ${totalReactions.eyes}`);
         break;
       case 'confused': 
         totalReactions.confused++; 
+        console.log(`Added confused, new count: ${totalReactions.confused}`);
+        break;
+      case 'laugh': 
+        totalReactions.laugh++; 
+        console.log(`Added laugh, new count: ${totalReactions.laugh}`);
+        break;
+      case 'hooray': 
+        totalReactions.hooray++; 
+        console.log(`Added hooray, new count: ${totalReactions.hooray}`);
+        break;
+      default:
+        console.log(`Unknown reaction type: ${reactionContent} - not counted in categories`);
         break;
     }
     totalReactions.total++;
+    console.log(`Total reactions now: ${totalReactions.total}`);
   }
 }
 

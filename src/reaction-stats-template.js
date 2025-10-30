@@ -11,13 +11,16 @@ class ReactionStatsTemplate {
   static generateRuleStats(reactions) {
     // Handle both emoji keys and property names
     const thumbsUp = reactions.thumbsUp || reactions['👍'] || 0;
+    const thumbsDown = reactions.thumbsDown || reactions['👎'] || 0;
     const heart = reactions.heart || reactions['❤️'] || 0;
     const rocket = reactions.rocket || reactions['🚀'] || 0;
     const eyes = reactions.eyes || reactions['👀'] || 0;
     const confused = reactions.confused || reactions['😕'] || 0;
-    const total = reactions.total || (thumbsUp + heart + rocket + eyes + confused);
+    const laugh = reactions.laugh || reactions['😄'] || 0;
+    const hooray = reactions.hooray || reactions['🎉'] || 0;
+    const total = reactions.total || (thumbsUp + thumbsDown + heart + rocket + eyes + confused + laugh + hooray);
     
-    return `👍 **${thumbsUp}** | ❤️ **${heart}** | 🚀 **${rocket}** | 👀 **${eyes}** | 😕 **${confused}** | **Total: ${total} reactions**`;
+    return `👍 **${thumbsUp}** | 👎 **${thumbsDown}** | ❤️ **${heart}** | 🚀 **${rocket}** | 👀 **${eyes}** | 😕 **${confused}** | 😄 **${laugh}** | 🎉 **${hooray}** | **Total: ${total} reactions**`;
   }
 
   /**
@@ -28,13 +31,16 @@ class ReactionStatsTemplate {
   static generateHallOfFameStats(reactions) {
     // Handle both emoji keys and property names
     const thumbsUp = reactions.thumbsUp || reactions['👍'] || 0;
+    const thumbsDown = reactions.thumbsDown || reactions['👎'] || 0;
     const heart = reactions.heart || reactions['❤️'] || 0;
     const rocket = reactions.rocket || reactions['🚀'] || 0;
     const eyes = reactions.eyes || reactions['👀'] || 0;
     const confused = reactions.confused || reactions['😕'] || 0;
-    const total = reactions.total || (thumbsUp + heart + rocket + eyes + confused);
+    const laugh = reactions.laugh || reactions['😄'] || 0;
+    const hooray = reactions.hooray || reactions['🎉'] || 0;
+    const total = reactions.total || (thumbsUp + thumbsDown + heart + rocket + eyes + confused + laugh + hooray);
     
-    return `- 👍 **${thumbsUp}** | ❤️ **${heart}** | 🚀 **${rocket}** | 👀 **${eyes}** | 😕 **${confused}**
+    return `- 👍 **${thumbsUp}** | 👎 **${thumbsDown}** | ❤️ **${heart}** | 🚀 **${rocket}** | 👀 **${eyes}** | 😕 **${confused}** | 😄 **${laugh}** | 🎉 **${hooray}**
 - **${total} total community reactions**${total === 0 ? ' - *Help us by sharing your experience!*' : ''}`;
   }
 
@@ -62,8 +68,8 @@ class ReactionStatsTemplate {
     }
     
     // Check if it has either emoji keys or property names
-    const hasEmojiKeys = ['👍', '❤️', '🚀', '👀', '😕'].some(emoji => reactions.hasOwnProperty(emoji));
-    const hasPropertyNames = ['thumbsUp', 'heart', 'rocket', 'eyes', 'confused'].some(prop => reactions.hasOwnProperty(prop));
+    const hasEmojiKeys = ['👍', '👎', '❤️', '🚀', '👀', '😕', '😄', '🎉'].some(emoji => reactions.hasOwnProperty(emoji));
+    const hasPropertyNames = ['thumbsUp', 'thumbsDown', 'heart', 'rocket', 'eyes', 'confused', 'laugh', 'hooray'].some(prop => reactions.hasOwnProperty(prop));
     
     return hasEmojiKeys || hasPropertyNames;
   }
