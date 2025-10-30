@@ -10,9 +10,12 @@ An AI agent rule that extracts meaningful insights from datasets and generates a
 - "Create a performance dashboard from this marketing campaign data"
 - "Identify correlations and predictive insights from this user behavior data"
 
+## Rule Metadata
+- Contributor: [@avalus](https://github.com/avalus)
+
 ## Community Feedback
 
-**[Share Your Experience in GitHub Discussions →](https://github.com/avalus/rulebase/discussions)**
+**[Share Your Experience in GitHub Discussions →](https://github.com/avalus/rulebase/discussions/2)**
 
 *Click the link above to join the discussion for this rule and share your experience!*
 

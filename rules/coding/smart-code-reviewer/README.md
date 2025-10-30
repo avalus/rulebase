@@ -10,9 +10,12 @@ An AI agent rule that performs comprehensive code reviews with focus on security
 - "Review my API endpoint implementation for security flaws"
 - "Evaluate this code for maintainability and suggest refactoring"
 
+## Rule Metadata
+- Contributor: [@avalus](https://github.com/avalus)
+
 ## Community Feedback
 
-**[Share Your Experience in GitHub Discussions →](https://github.com/avalus/rulebase/discussions)**
+**[Share Your Experience in GitHub Discussions →](https://github.com/avalus/rulebase/discussions/1)**
 
 *Click the link above to join the discussion for this rule and share your experience!*
 

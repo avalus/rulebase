@@ -5,13 +5,11 @@
 [![GitHub issues](https://img.shields.io/github/issues/avalus/rulebase)](https://github.com/avalus/rulebase/issues)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **The ultimate community-driven repository for AI agent rules and workflows** 🚀
-
-Welcome to Rulebase! This is where developers worldwide share, discover, and provide feedback on AI agent rules that make their workflows more efficient and powerful. Whether you're building chatbots, automation systems, or intelligent assistants, you'll find battle-tested rules here.
+Welcome to Rulebase! This is where developers can share, discover, and provide feedback on AI agent rules that make their workflows more efficient and powerful. Whether you're building chatbots, automation systems, or intelligent assistants, you'll find battle-tested rules here.
 
 ## 🌟 What is Rulebase?
 
-Rulebase is a curated collection of AI agent rules and workflows that have been tested and refined by the developer community. Each rule comes with:
+Rulebase is a curated collection of AI agent rules that have been tested and refined by the developer community. Each rule comes with:
 
 - 👍 **Community feedback** using GitHub reactions
 - 📝 **Clear documentation** and usage examples  

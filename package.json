@@ -1,17 +1,20 @@
 {
   "name": "rulebase-workflow-test",
   "version": "1.0.0",
-  "description": "Local testing for GitHub workflow logic",
-  "main": "test-workflow-locally.js",
+  "description": "GitHub workflow for updating Rulebase reaction statistics",
+  "main": "update-stats.js",
   "scripts": {
-    "test": "node test-workflow-locally.js",
-    "test-real": "node test-workflow-locally.js --real-api"
+    "start": "node update-stats.js",
+    "test": "node tests/run-tests.js"
   },
   "dependencies": {
     "@octokit/rest": "^20.0.2"
   },
   "devDependencies": {},
-  "keywords": ["github", "workflow", "testing", "reactions"],
+  "keywords": ["github", "workflow", "reactions", "rulebase"],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

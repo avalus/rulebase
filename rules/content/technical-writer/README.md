@@ -10,9 +10,12 @@ An AI agent rule that creates clear, comprehensive technical documentation. Tran
 - "Write a troubleshooting guide for common error messages"
 - "Create developer onboarding documentation for this codebase"
 
+## Rule Metadata
+- Contributor: [@avalus](https://github.com/avalus)
+
 ## Community Feedback
 
-**[Share Your Experience in GitHub Discussions →](https://github.com/avalus/rulebase/discussions)**
+**[Share Your Experience in GitHub Discussions →](https://github.com/avalus/rulebase/discussions/3)**
 
 *Click the link above to join the discussion for this rule and share your experience!*
 

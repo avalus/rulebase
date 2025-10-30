@@ -53,12 +53,10 @@ class ReactionCollector {
         total: 0
       };
 
-      // Strategy 1: Search for issues/PRs that mention this rule
+      // Strategy 1: Search for issues/PRs that mention this rule in the title
       const searchQueries = [
         `repo:${owner}/${repo} "${ruleName}" in:title`,
-        `repo:${owner}/${repo} "${ruleName}" in:body`,
-        `repo:${owner}/${repo} "${folderName}" in:body`,
-        `repo:${owner}/${repo} "rules/${ruleKey}" in:body`
+        `repo:${owner}/${repo} "${folderName}" in:title`,
       ];
 
       for (const query of searchQueries) {
@@ -80,16 +78,10 @@ class ReactionCollector {
               const { data: comments } = await this.githubAPI.getIssueComments(owner, repo, item.number);
 
               for (const comment of comments) {
-                // Only count reactions on comments that mention the rule (simplified to only check rule name)
-                const commentMentionsRule = comment.body.toLowerCase().includes(ruleName.toLowerCase());
-                
-                if (commentMentionsRule) {
-                  
-                  const { data: commentReactions } = await this.githubAPI.getCommentReactions(owner, repo, comment.id);
+                const { data: commentReactions } = await this.githubAPI.getCommentReactions(owner, repo, comment.id);
 
-                  for (const reaction of commentReactions) {
-                    this._addReaction(totalReactions, reaction.content);
-                  }
+                for (const reaction of commentReactions) {
+                  this._addReaction(totalReactions, reaction.content);
                 }
               }
             } catch (itemError) {
@@ -109,7 +101,7 @@ class ReactionCollector {
         }
       }
 
-      // Strategy 2: Look for dedicated feedback in discussions (if available)
+      // Strategy 2: Look for discussions that mention this rule in the title
       try {
         const discussionQuery = `
           query($owner: String!, $repo: String!) {
@@ -143,13 +135,13 @@ class ReactionCollector {
         
         if (discussionData.repository?.discussions?.nodes) {
           // Define lowercase variables for comparison
-          const ruleKeyLower = ruleKey.toLowerCase();
           const ruleNameLower = ruleName.toLowerCase();
           const folderNameLower = folderName.toLowerCase();
           
           for (const discussion of discussionData.repository.discussions.nodes) {
-            // Check if discussion mentions the rule (only check for complete rule name in title)
-            const mentionsRule = discussion.title.toLowerCase().includes(ruleNameLower);
+            // Check if discussion title mentions the rule
+            const mentionsRule = discussion.title.toLowerCase().includes(ruleNameLower) ||
+                                 discussion.title.toLowerCase().includes(folderNameLower);
             
             if (mentionsRule) {
               // Add discussion reactions
@@ -159,17 +151,8 @@ class ReactionCollector {
               
               // Add comment reactions
               for (const comment of discussion.comments.nodes) {
-                const commentBodyLower = comment.body.toLowerCase();
-                const commentMentionsRule = commentBodyLower.includes(ruleKeyLower) ||
-                                          commentBodyLower.includes(ruleNameLower) ||
-                                          commentBodyLower.includes(folderNameLower) ||
-                                          commentBodyLower.includes(filePath) ||
-                                          ruleNameLower.split(' ').some(word => word.length > 3 && commentBodyLower.includes(word));
-                
-                if (commentMentionsRule) {
-                  for (const reaction of comment.reactions.nodes) {
-                    this._addReaction(totalReactions, reaction.content);
-                  }
+                for (const reaction of comment.reactions.nodes) {
+                  this._addReaction(totalReactions, reaction.content);
                 }
               }
             }

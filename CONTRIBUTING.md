@@ -53,6 +53,14 @@ Before submitting a rule, ensure it meets these criteria:
 - Not a duplicate of existing rules
 - Includes proper attribution if based on other work
 
+### Licensing
+
+**For Original Rules:**
+By contributing original rules to Rulebase, you agree that your contributions will be licensed under the same [MIT License](LICENSE) as the main project.
+
+**For Rules from Other Projects:**
+Rules copied or adapted from other projects must use compatible open-source licenses. Include the original licensing information in the rule's metadata (see rule template below). Non-MIT licensed rules will be clearly marked in the repository.
+
 ### Rule Categories
 
 Choose the appropriate category for your rule:
@@ -95,8 +103,11 @@ Use this template for your rule documentation:
 - "[Example prompt 1 showing how to use this rule]"
 - "[Example prompt 2 demonstrating another use case]"
 
-## [Custom Section]
-[Add any custom sections you need, such as "Limitations" or "Known Issues"]
+## Rule Metadata
+- Contributor: [@your-github-username](https://github.com/your-github-username)
+- Original Author: [Name] (if applicable)
+- Original Project: [Project Name](https://project-url) (if applicable)
+- Original License: [License Type] (if applicable)
 
 ## Community Feedback
 
@@ -104,40 +115,12 @@ Use this template for your rule documentation:
 
 *Click the link above to join the discussion for this rule and share your experience!*
 
-### How to Provide Feedback
-1. Click the "Share Your Experience" button above
-2. Find or create a discussion thread for "[Your Rule Name]"
-3. Add your reaction to the discussion post: 👍 ❤️ 🚀 👀 😕
-4. Optionally, leave a comment with your experience
-
-### Reaction Meanings
-- 👍 **Thumbs Up** - Works great, recommended!
-- ❤️ **Heart** - Love this rule, essential for workflow
-- 🚀 **Rocket** - Game-changer, significantly improved productivity
-- 👀 **Eyes** - Interesting, want to try this
-- 😕 **Confused** - Needs improvement or clarification
-
 ### Current Community Reactions
 <!-- STATS_START -->
 👍 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | **Total: 0 reactions**
 <!-- STATS_END -->
 
 *This section is automatically updated by our community feedback system.*
-```
-
-### Markdown Rule Template
-
-Use this template for your rule file (`rule-name.md`):
-
-```markdown
----
-name: "[Your Rule Name]"
-category: "[Category]"
-author: "@[Your GitHub Username]"
----
-
-# [Your Rule Name]
-[Your rule in Markdown format]
 ```
 
 ## 🚀 Submission Process
