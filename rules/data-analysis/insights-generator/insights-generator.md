@@ -1,8 +1,7 @@
 ---
 name: "Data Insights Generator"
+category: "data-analysis"
 author: "@avalus"
-compatible-agents: ["Cline", "Windsurf", "Trae AI", "Cursor", "GitHub Copilot"]
-tool-access: ["file-system", "data-files", "statistics", "visualization", "databases"]
 ---
 
 # Data Insights Generator

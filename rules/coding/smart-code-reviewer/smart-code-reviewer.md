@@ -1,8 +1,7 @@
 ---
 name: "Smart Code Reviewer"
+category: "coding"
 author: "@avalus"
-compatible-agents: ["Cline", "Windsurf", "Trae AI", "Cursor", "GitHub Copilot"]
-tool-access: ["file-system", "regex", "version-control"]
 ---
 
 # Smart Code Reviewer

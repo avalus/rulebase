@@ -1,8 +1,7 @@
 ---
 name: "Technical Writer"
+category: "content"
 author: "@avalus"
-compatible-agents: ["Cline", "Windsurf", "Trae AI", "Cursor", "GitHub Copilot"]
-tool-access: ["file-system", "code-analysis", "documentation-platforms"]
 ---
 
 # Technical Writer

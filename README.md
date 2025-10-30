@@ -1,4 +1,4 @@
-# 🤖 RuleBase - Community Hub for AI Agent Rules
+# Rulebase - Community for AI Agent Rules
 
 [![GitHub stars](https://img.shields.io/github/stars/avalus/rulebase?style=social)](https://github.com/avalus/rulebase/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/avalus/rulebase?style=social)](https://github.com/avalus/rulebase/network/members)
@@ -7,31 +7,25 @@
 
 > **The ultimate community-driven repository for AI agent rules and workflows** 🚀
 
-Welcome to RuleBase! This is where developers worldwide share, discover, and rate AI agent rules that make their workflows more efficient and powerful. Whether you're building chatbots, automation systems, or intelligent assistants, you'll find battle-tested rules here.
+Welcome to Rulebase! This is where developers worldwide share, discover, and provide feedback on AI agent rules that make their workflows more efficient and powerful. Whether you're building chatbots, automation systems, or intelligent assistants, you'll find battle-tested rules here.
 
-## 🌟 What is RuleBase?
+## 🌟 What is Rulebase?
 
-RuleBase is a curated collection of AI agent rules and workflows that have been tested and refined by the developer community. Each rule comes with:
+Rulebase is a curated collection of AI agent rules and workflows that have been tested and refined by the developer community. Each rule comes with:
 
-- ⭐ **Community ratings** using GitHub reactions
+- 👍 **Community feedback** using GitHub reactions
 - 📝 **Clear documentation** and usage examples  
 - 🏷️ **Categorized organization** for easy discovery
 - 🔄 **Version history** and improvements over time
 
 ## 🚀 Quick Start
 
-### Finding Rules
-Browse our organized categories:
-- [**Coding Assistants**](./rules/coding/) - Rules for development workflows
-- [**Content Creation**](./rules/content/) - Writing, documentation, and creative tasks
-- [**Data Analysis**](./rules/data-analysis/) - Data processing and insights
-
 ### Using a Rule
-1. Browse the [Table of Contents](#-table-of-contents) below
+1. Browse the [Available Rules](#-available-rules) section below
 2. Navigate to the rule category you need
 3. Copy the rule file to your AI agent system
 4. Follow the setup instructions in each rule's README
-5. ⭐ Rate the rule using GitHub reactions!
+5. 👍 Provide feedback using GitHub reactions!
 
 ### Contributing Your Rules
 Have an amazing AI agent rule? Share it with the community!
@@ -40,41 +34,30 @@ Have an amazing AI agent rule? Share it with the community!
 3. Submit a pull request
 4. Get feedback and see your rule help thousands of developers!
 
-## 📊 Rating System
+## 👍 Reaction System
 
-We use GitHub reactions to rate rules:
+We use GitHub reactions to gather community feedback on rules:
 - 👍 **Thumbs Up** - Works great, recommended!
 - ❤️ **Heart** - Love this rule, essential for my workflow
 - 🚀 **Rocket** - Game-changer, significantly improved productivity  
 - 👀 **Eyes** - Interesting, want to try this
 - 😕 **Confused** - Needs improvement or clarification
 
-**Top-rated rules** (sorted by 👍 + ❤️ + 🚀 reactions) are featured in our [Hall of Fame](./HALL_OF_FAME.md).
+**Popular rules** with positive community feedback are featured in our [Hall of Fame](./HALL_OF_FAME.md).
 
-## 📚 Table of Contents
+## 📚 Available Rules
 
-### 🔧 Coding Assistants
-| Rule Name | Description | Rating | Author |
-|-----------|-------------|--------|--------|
-| [Smart Code Reviewer](./rules/coding/smart-code-reviewer/) | Automated code review with best practices | ⭐⭐⭐⭐⭐ | [@avalus](https://github.com/avalus) |
+Browse all available rules in the **[rules directory](./rules/)** - organized by category:
 
-### ✍️ Content Creation  
-| Rule Name | Description | Rating | Author |
-|-----------|-------------|--------|--------|
-| [Technical Writer](./rules/content/technical-writer/) | Generate clear technical documentation | ⭐⭐⭐⭐⭐ | [@avalus](https://github.com/avalus) |
+- **🔧 [Coding](./rules/coding/)** - Code review and development assistants
+- **✍️ [Content](./rules/content/)** - Writing and documentation tools  
+- **📊 [Data Analysis](./rules/data-analysis/)** - Data processing and insights
 
-### 📊 Data Analysis
-| Rule Name | Description | Rating | Author |
-|-----------|-------------|--------|--------|
-| [Data Insights Generator](./rules/data-analysis/insights-generator/) | Extract meaningful insights from datasets | ⭐⭐⭐⭐⭐ | [@avalus](https://github.com/avalus) |
+Each rule includes detailed documentation and usage examples.
 
-*[View all rules →](./RULES_INDEX.md)*
+## 🏆 Popular Rules
 
-## 🏆 Featured Rules This Month
-
-- 🥇 **[Smart Code Reviewer](./rules/coding/smart-code-reviewer/)** - 0 👍, 0 ❤️, 0 🚀
-- 🥈 **[Technical Writer](./rules/content/technical-writer/)** - 0 👍, 0 ❤️, 0 🚀  
-- 🥉 **[Data Insights Generator](./rules/data-analysis/insights-generator/)** - 0 👍, 0 ❤️, 0 🚀
+Check out our [Hall of Fame](./HALL_OF_FAME.md) to see the most appreciated rules by the community!
 
 ## 🤝 Contributing
 
@@ -82,7 +65,7 @@ We welcome contributions from developers worldwide! Here's how you can help:
 
 1. **Share your rules** - Submit your best AI agent rules
 2. **Improve existing rules** - Enhance documentation, fix bugs, add features
-3. **Rate and review** - Help others discover great rules
+3. **Provide feedback** - Help others discover great rules with reactions
 4. **Spread the word** - Star the repo and share with your network
 
 Read our [Contribution Guidelines](./CONTRIBUTING.md) for detailed instructions.
@@ -93,11 +76,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-Special thanks to all contributors who make RuleBase the go-to resource for AI agent rules:
+Special thanks to all contributors who make Rulebase the go-to resource for AI agent rules:
 
 - All rule contributors and maintainers
-- Community members who provide feedback and ratings
-- Everyone who helps spread the word about RuleBase
+- Community members who provide feedback through reactions
+- Everyone who helps spread the word about Rulebase
 
 ---
 
