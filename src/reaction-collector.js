@@ -205,34 +205,42 @@ class ReactionCollector {
     console.log(`Processing reaction: ${reactionContent}`);
     switch (reactionContent) {
       case '+1': 
+      case 'THUMBS_UP':
         totalReactions.thumbsUp++; 
         console.log(`Added thumbs up, new count: ${totalReactions.thumbsUp}`);
         break;
       case '-1': 
+      case 'THUMBS_DOWN':
         totalReactions.thumbsDown++; 
         console.log(`Added thumbs down, new count: ${totalReactions.thumbsDown}`);
         break;
       case 'heart': 
+      case 'HEART':
         totalReactions.heart++; 
         console.log(`Added heart, new count: ${totalReactions.heart}`);
         break;
       case 'rocket': 
+      case 'ROCKET':
         totalReactions.rocket++; 
         console.log(`Added rocket, new count: ${totalReactions.rocket}`);
         break;
       case 'eyes': 
+      case 'EYES':
         totalReactions.eyes++; 
         console.log(`Added eyes, new count: ${totalReactions.eyes}`);
         break;
       case 'confused': 
+      case 'CONFUSED':
         totalReactions.confused++; 
         console.log(`Added confused, new count: ${totalReactions.confused}`);
         break;
       case 'laugh': 
+      case 'LAUGH':
         totalReactions.laugh++; 
         console.log(`Added laugh, new count: ${totalReactions.laugh}`);
         break;
       case 'hooray': 
+      case 'HOORAY':
         totalReactions.hooray++; 
         console.log(`Added hooray, new count: ${totalReactions.hooray}`);
         break;
