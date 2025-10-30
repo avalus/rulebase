@@ -5,7 +5,7 @@ Welcome to the Rulebase Hall of Fame! This showcases our most popular and effect
 ## 📊 Community Overview
 
 Our community has provided <!-- OVERALL_TOTAL_START -->
-0+ total community reactions
+1+ total community reactions
 <!-- OVERALL_TOTAL_END --> across all rules, with <!-- OVERALL_FEEDBACK_START -->
 0% average positive feedback
 <!-- OVERALL_FEEDBACK_END -->
