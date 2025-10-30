@@ -53,7 +53,7 @@ jobs:
           if git diff --quiet; then
             echo "No changes to commit"
           else
-            git add RULES_INDEX.md HALL_OF_FAME.md
-            git commit -m "🤖 Auto-update repository statistics and reaction data [skip ci]"
+            git add HALL_OF_FAME.md rules/**/README.md
+            git commit -m "Auto-update stats"
             git push
           fi
