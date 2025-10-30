@@ -35,9 +35,7 @@ jobs:
           node-version: '18'
           
       - name: Install dependencies
-        run: |
-          npm init -y
-          npm install @octokit/rest
+        run: npm install
           
       - name: Update reaction statistics
         run: node update-stats.js
@@ -49,9 +47,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          
-          # Reset package.json changes since they're just from npm init/install
-          git checkout -- package.json package-lock.json 2>/dev/null || true
           
           # Check if there are any meaningful changes to commit
           if git diff --quiet && git diff --cached --quiet; then
