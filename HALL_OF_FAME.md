@@ -5,9 +5,9 @@ Welcome to the Rulebase Hall of Fame! This showcases our most popular and effect
 ## 📊 Community Overview
 
 Our community has provided <!-- OVERALL_TOTAL_START -->
-3+ total community reactions
+4+ total community reactions
 <!-- OVERALL_TOTAL_END --> across all rules, with <!-- OVERALL_FEEDBACK_START -->
-33% average positive feedback
+50% average positive feedback
 <!-- OVERALL_FEEDBACK_END -->
 
 ## 🌟 Featured Rules
@@ -32,8 +32,8 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 **Path:** `rules/content/technical-writer/`
 
 <!-- RULE_STATS_START:content/technical-writer -->
-- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **1** | 😕 **0** | 😄 **0** | 🎉 **0**
-- **1 total community reactions**
+- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **1** | 👀 **1** | 😕 **0** | 😄 **0** | 🎉 **0**
+- **2 total community reactions**
 <!-- RULE_STATS_END:content/technical-writer -->
 
 **Perfect for:** API documentation, user guides, technical blog posts
