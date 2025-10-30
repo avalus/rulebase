@@ -86,7 +86,7 @@ class GitHubAPI {
   }
 
   /**
-   * Get reactions for a comment
+   * Get comment reactions
    */
   async getCommentReactions(owner, repo, commentId) {
     await this.rateLimitDelay();
@@ -94,6 +94,18 @@ class GitHubAPI {
       owner,
       repo,
       comment_id: commentId
+    });
+  }
+
+  /**
+   * Get file content from repository
+   */
+  async getFileContent(owner, repo, path) {
+    await this.rateLimitDelay();
+    return await this.octokit.rest.repos.getContent({
+      owner,
+      repo,
+      path
     });
   }
 

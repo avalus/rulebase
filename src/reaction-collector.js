@@ -7,14 +7,39 @@ class ReactionCollector {
   }
 
   /**
+   * Extract rule name from README header (first # heading)
+   */
+  async extractRuleNameFromReadme(owner, repo, filePath) {
+    try {
+      const { data: fileContent } = await this.githubAPI.getFileContent(owner, repo, filePath);
+      const content = Buffer.from(fileContent.content, 'base64').toString('utf-8');
+      
+      // Find the first # heading
+      const headerMatch = content.match(/^#\s+(.+)$/m);
+      if (headerMatch) {
+        return headerMatch[1].trim();
+      }
+      
+      // Fallback to folder name if no header found
+      const ruleKey = filePath.replace('rules/', '').replace('/README.md', '');
+      return ruleKey.split('/').pop();
+    } catch (error) {
+      console.warn(`Could not extract rule name from ${filePath}, using folder name:`, error.message);
+      const ruleKey = filePath.replace('rules/', '').replace('/README.md', '');
+      return ruleKey.split('/').pop();
+    }
+  }
+
+  /**
    * Get reactions for a specific rule
    */
   async getRuleReactions(owner, repo, filePath) {
     try {
       const ruleKey = filePath.replace('rules/', '').replace('/README.md', '');
-      const ruleName = ruleKey.split('/').pop(); // e.g., "smart-code-reviewer"
+      const folderName = ruleKey.split('/').pop(); // e.g., "smart-code-reviewer"
+      const ruleName = await this.extractRuleNameFromReadme(owner, repo, filePath); // e.g., "Smart Code Reviewer"
       const ruleCategory = ruleKey.split('/')[0]; // e.g., "coding"
-      console.log(`Fetching reactions for rule: ${ruleKey} (name: ${ruleName}, category: ${ruleCategory})`);
+      console.log(`Fetching reactions for rule: ${ruleKey} (name: "${ruleName}", folder: "${folderName}", category: ${ruleCategory})`);
       
       let totalReactions = {
         thumbsUp: 0,
@@ -29,7 +54,9 @@ class ReactionCollector {
       const searchQueries = [
         `repo:${owner}/${repo} "${ruleKey}" in:body`,
         `repo:${owner}/${repo} "${filePath}" in:body`,
-        `repo:${owner}/${repo} "${ruleKey.split('/').pop()}" in:title`
+        `repo:${owner}/${repo} "${ruleName}" in:title`,
+        `repo:${owner}/${repo} "${ruleName}" in:body`,
+        `repo:${owner}/${repo} "${folderName}" in:title` // Keep folder name as fallback
       ];
 
       for (const query of searchQueries) {

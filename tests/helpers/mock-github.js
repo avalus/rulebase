@@ -21,6 +21,9 @@ class MockOctokit {
         listReviewComments: this.mockListReviewComments.bind(this),
         list: this.mockListPulls.bind(this)
       },
+      repos: {
+        getContent: this.mockGetContent.bind(this)
+      },
       rateLimit: {
         get: this.mockGetRateLimit.bind(this)
       }
@@ -88,6 +91,34 @@ class MockOctokit {
           reset: Math.floor(this.rateLimitReset / 1000),
           used: 5000 - this.rateLimitRemaining
         }
+      }
+    };
+  }
+
+  async mockGetContent(params) {
+    this.callCount++;
+    this.rateLimitRemaining--;
+    
+    console.log(`📄 Mock API: Getting content for "${params.path}"`);
+    
+    // Mock README content based on the path
+    let content = '';
+    if (params.path.includes('smart-code-reviewer')) {
+      content = '# Smart Code Reviewer\n\nAn AI agent rule that performs comprehensive code reviews...';
+    } else if (params.path.includes('technical-writer')) {
+      content = '# Technical Writer\n\nAn AI agent rule that creates clear, comprehensive technical documentation...';
+    } else if (params.path.includes('insights-generator')) {
+      content = '# Insights Generator\n\nAn AI agent rule that analyzes data and generates actionable insights...';
+    } else {
+      // Default content for unknown rules
+      const ruleName = params.path.split('/').pop().replace('.md', '').replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+      content = `# ${ruleName}\n\nA sample rule description...`;
+    }
+    
+    return {
+      data: {
+        content: Buffer.from(content).toString('base64'),
+        encoding: 'base64'
       }
     };
   }
