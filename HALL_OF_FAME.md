@@ -18,7 +18,7 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 **Path:** `rules/coding/smart-code-reviewer/`
 
 <!-- RULE_STATS_START:coding/smart-code-reviewer -->
-- 👍 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0**
+- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
 - **1 total community reactions**
 <!-- RULE_STATS_END:coding/smart-code-reviewer -->
 
@@ -32,7 +32,7 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 **Path:** `rules/content/technical-writer/`
 
 <!-- RULE_STATS_START:content/technical-writer -->
-- 👍 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0**
+- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
 - **0 total community reactions** - *Help us by sharing your experience!*
 <!-- RULE_STATS_END:content/technical-writer -->
 
@@ -46,7 +46,7 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 **Path:** `rules/data-analysis/insights-generator/`
 
 <!-- RULE_STATS_START:data-analysis/insights-generator -->
-- 👍 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0**
+- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0**
 - **1 total community reactions**
 <!-- RULE_STATS_END:data-analysis/insights-generator -->
 
