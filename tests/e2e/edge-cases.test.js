@@ -304,7 +304,7 @@ framework.describe('File Operation Edge Cases', () => {
     };
     
     try {
-      const result = FileUpdater.updateHallOfFame(mockReactions, 11);
+      const result = FileUpdater.updateHallOfFame(mockReactions, 11, 'non-existent-hall-of-fame.md');
       // Should handle missing file gracefully
       Assertions.assertTrue(typeof result === 'boolean', 'Should return boolean result');
     } catch (error) {
@@ -344,7 +344,7 @@ No stats section exists here.`;
     const emptyReactions = {};
     
     try {
-      FileUpdater.updateHallOfFame(emptyReactions, 0);
+      FileUpdater.updateHallOfFame(emptyReactions, 0, 'non-existent-hall-of-fame.md');
       Assertions.assertTrue(true, 'Should handle empty reactions');
     } catch (error) {
       // Expected if file doesn't exist
@@ -358,7 +358,7 @@ No stats section exists here.`;
     };
     
     try {
-      FileUpdater.updateHallOfFame(invalidReactions, 0);
+      FileUpdater.updateHallOfFame(invalidReactions, 0, 'non-existent-hall-of-fame.md');
       Assertions.assertTrue(true, 'Should handle invalid reaction structure');
     } catch (error) {
       // Expected behavior

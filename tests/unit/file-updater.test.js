@@ -208,38 +208,27 @@ ${FileUpdater.MARKERS.HALL_RULE_END('content/technical-writer')}
     const tempFile = path.join(__dirname, '../fixtures/temp-hall-of-fame.md');
     fs.writeFileSync(tempFile, testContent);
     
-    // Temporarily replace the HALL_OF_FAME.md path for testing
-    const originalCwd = process.cwd();
-    const tempDir = path.dirname(tempFile);
-    const tempHallName = path.basename(tempFile);
-    
     try {
-      // Copy to expected location for the method
-      const testHallPath = path.join(process.cwd(), 'HALL_OF_FAME.md');
-      fs.copyFileSync(tempFile, testHallPath);
-      
-      const result = FileUpdater.updateHallOfFame(mockRuleReactions, 58);
+      // Use the temporary file directly instead of copying to project root
+      const result = FileUpdater.updateHallOfFame(mockRuleReactions, 58, tempFile);
       Assertions.assertTrue(result, 'Should successfully update Hall of Fame');
       
-      const updatedContent = fs.readFileSync(testHallPath, 'utf8');
+      const updatedContent = fs.readFileSync(tempFile, 'utf8');
       Assertions.assertTrue(updatedContent.includes('👍 **15**'), 'Should update first rule thumbs up');
       Assertions.assertTrue(updatedContent.includes('👍 **12**'), 'Should update second rule thumbs up');
       Assertions.assertTrue(updatedContent.includes('58+ total community reactions'), 'Should update total reactions');
       
       // Clean up
-      fs.unlinkSync(testHallPath);
       fs.unlinkSync(tempFile);
     } catch (error) {
       // Clean up on error
-      const testHallPath = path.join(process.cwd(), 'HALL_OF_FAME.md');
-      if (fs.existsSync(testHallPath)) fs.unlinkSync(testHallPath);
       if (fs.existsSync(tempFile)) fs.unlinkSync(tempFile);
       throw error;
     }
   });
 
   framework.it('should handle missing Hall of Fame file', () => {
-    const result = FileUpdater.updateHallOfFame(mockRuleReactions, 58);
+    const result = FileUpdater.updateHallOfFame(mockRuleReactions, 58, 'non-existent-hall-of-fame.md');
     Assertions.assertTrue(!result, 'Should return false for missing Hall of Fame file');
   });
 });

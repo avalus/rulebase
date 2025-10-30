@@ -9,6 +9,7 @@ class MockOctokit {
     this.callCount = 0;
     this.rateLimitRemaining = 5000;
     this.rateLimitReset = Date.now() + 3600000; // 1 hour from now
+    this.discussionsData = options.discussionsData || this.getDefaultDiscussionsData();
     
     this.rest = {
       search: {
@@ -30,9 +31,91 @@ class MockOctokit {
     };
   }
 
+  async graphql(query, variables = {}) {
+    this.callCount++;
+    this.rateLimitRemaining--;
+    
+    // Handle shouldFail flag
+    if (this.shouldFail) {
+      throw new Error('Mock GraphQL failure - shouldFail is true');
+    }
+    
+    console.log(`🔍 Mock GraphQL: Query for discussions in ${variables.owner}/${variables.repo}`);
+    
+    // Return mock discussions data
+    return {
+      repository: {
+        discussions: {
+          nodes: this.discussionsData
+        }
+      }
+    };
+  }
+
+  getDefaultDiscussionsData() {
+    return [
+      {
+        title: "Data Insights Generator",
+        body: "Discussion about the data-analysis/insights-generator rule. This rule helps extract meaningful insights from datasets.",
+        reactions: {
+          nodes: [
+            { content: "+1" },
+            { content: "+1" },
+            { content: "heart" },
+            { content: "rocket" }
+          ]
+        },
+        comments: {
+          nodes: [
+            {
+              body: "I love using the Data Insights Generator for my analytics work!",
+              reactions: {
+                nodes: [
+                  { content: "+1" },
+                  { content: "heart" }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        title: "Smart Code Reviewer Rule",
+        body: "Let's discuss the smart-code-reviewer rule and how it helps with code quality.",
+        reactions: {
+          nodes: [
+            { content: "+1" },
+            { content: "+1" },
+            { content: "+1" },
+            { content: "rocket" },
+            { content: "eyes" }
+          ]
+        },
+        comments: {
+          nodes: [
+            {
+              body: "The Smart Code Reviewer has been amazing for catching security issues!",
+              reactions: {
+                nodes: [
+                  { content: "+1" },
+                  { content: "rocket" }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ];
+  }
+
   async mockSearchIssuesAndPullRequests(params) {
     this.callCount++;
     this.rateLimitRemaining--;
+    
+    // Handle shouldFail flag
+    if (this.shouldFail) {
+      throw new Error('Mock API failure - shouldFail is true');
+    }
     
     console.log(`🔍 Mock API: Searching for "${params.q}"`);
     

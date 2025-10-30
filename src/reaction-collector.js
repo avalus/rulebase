@@ -55,8 +55,7 @@ class ReactionCollector {
         `repo:${owner}/${repo} "${ruleKey}" in:body`,
         `repo:${owner}/${repo} "${filePath}" in:body`,
         `repo:${owner}/${repo} "${ruleName}" in:title`,
-        `repo:${owner}/${repo} "${ruleName}" in:body`,
-        `repo:${owner}/${repo} "${folderName}" in:title` // Keep folder name as fallback
+        `repo:${owner}/${repo} "${ruleName}" in:body`
       ];
 
       for (const query of searchQueries) {
@@ -78,9 +77,10 @@ class ReactionCollector {
               const { data: comments } = await this.githubAPI.getIssueComments(owner, repo, item.number);
 
               for (const comment of comments) {
-                // Only count reactions on comments that mention the rule
-                if (comment.body.toLowerCase().includes(ruleKey.toLowerCase()) || 
-                    comment.body.includes(filePath)) {
+                // Only count reactions on comments that mention the rule (simplified to only check rule name)
+                const commentMentionsRule = comment.body.toLowerCase().includes(ruleName.toLowerCase());
+                
+                if (commentMentionsRule) {
                   
                   const { data: commentReactions } = await this.githubAPI.getCommentReactions(owner, repo, comment.id);
 
@@ -140,9 +140,8 @@ class ReactionCollector {
         
         if (discussionData.repository?.discussions?.nodes) {
           for (const discussion of discussionData.repository.discussions.nodes) {
-            // Check if discussion mentions the rule
-            const mentionsRule = discussion.title.toLowerCase().includes(ruleKey.toLowerCase()) ||
-                               discussion.body.toLowerCase().includes(ruleKey.toLowerCase());
+            // Check if discussion mentions the rule (only check for complete rule name in title)
+            const mentionsRule = discussion.title.toLowerCase().includes(ruleName.toLowerCase());
             
             if (mentionsRule) {
               // Add discussion reactions
@@ -152,7 +151,14 @@ class ReactionCollector {
               
               // Add comment reactions
               for (const comment of discussion.comments.nodes) {
-                if (comment.body.toLowerCase().includes(ruleKey.toLowerCase())) {
+                const commentBodyLower = comment.body.toLowerCase();
+                const commentMentionsRule = commentBodyLower.includes(ruleKeyLower) ||
+                                          commentBodyLower.includes(ruleNameLower) ||
+                                          commentBodyLower.includes(folderNameLower) ||
+                                          commentBodyLower.includes(filePath) ||
+                                          ruleNameLower.split(' ').some(word => word.length > 3 && commentBodyLower.includes(word));
+                
+                if (commentMentionsRule) {
                   for (const reaction of comment.reactions.nodes) {
                     this._addReaction(totalReactions, reaction.content);
                   }

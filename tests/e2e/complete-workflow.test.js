@@ -42,7 +42,7 @@ framework.describe('Full System Integration', () => {
     
     // 4. Update Hall of Fame
     try {
-      FileUpdater.updateHallOfFame({}, 0);
+      FileUpdater.updateHallOfFame({}, 0, 'non-existent-hall-of-fame.md');
       Assertions.assertTrue(true, 'Should handle Hall of Fame update gracefully');
     } catch (error) {
       throw new Error('Should handle Hall of Fame update gracefully: ' + error.message);
@@ -80,7 +80,7 @@ framework.describe('Full System Integration', () => {
 <!-- HALL_RULE_END:test/rule -->`;
 
     const tempRuleFile = path.join(__dirname, '../fixtures/e2e-rule.md');
-    const tempHallFile = path.join(process.cwd(), 'HALL_OF_FAME.md');
+    const tempHallFile = path.join(__dirname, '../fixtures/temp-hall-of-fame.md');
     
     fs.writeFileSync(tempRuleFile, testRuleContent);
     fs.writeFileSync(tempHallFile, testHallContent);
@@ -101,7 +101,7 @@ framework.describe('Full System Integration', () => {
       Assertions.assertTrue(ruleResult, 'Should update rule README');
       
       // Update Hall of Fame
-      const hallResult = FileUpdater.updateHallOfFame({ 'test/rule': mockReactions }, 21);
+      const hallResult = FileUpdater.updateHallOfFame({ 'test/rule': mockReactions }, 21, tempHallFile);
       Assertions.assertTrue(hallResult, 'Should update Hall of Fame');
       
       // Verify updates
@@ -141,7 +141,7 @@ framework.describe('Error Recovery and Resilience', () => {
     
     // File operations should still work
     try {
-      FileUpdater.updateHallOfFame({}, 0);
+      FileUpdater.updateHallOfFame({}, 0, 'non-existent-hall-of-fame.md');
       Assertions.assertTrue(true, 'Should handle file operations after API failure');
     } catch (error) {
       throw new Error('Should handle file operations after API failure: ' + error.message);
@@ -158,7 +158,7 @@ framework.describe('Error Recovery and Resilience', () => {
     
     try {
       // Should handle missing Hall of Fame
-      FileUpdater.updateHallOfFame(mockReactions, 11);
+      FileUpdater.updateHallOfFame(mockReactions, 11, 'non-existent-hall-of-fame.md');
       
       // Should handle missing rule README
       FileUpdater.updateRuleReadme('non-existent-rule.md', mockReactions['non-existent/rule']);

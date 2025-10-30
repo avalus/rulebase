@@ -118,7 +118,7 @@ ${FileUpdater.MARKERS.HALL_RULE_END('data-analysis/insights-generator')}
 
 Want to see your rule featured here? Create amazing rules that help the community!`;
     
-    const tempHallFile = path.join(process.cwd(), 'HALL_OF_FAME.md');
+    const tempHallFile = path.join(__dirname, '../fixtures/temp-hall-of-fame.md');
     fs.writeFileSync(tempHallFile, testContent);
     
     try {
@@ -151,7 +151,7 @@ Want to see your rule featured here? Create amazing rules that help the communit
       };
       
       const totalReactions = 235;
-      const result = FileUpdater.updateHallOfFame(ruleReactions, totalReactions);
+      const result = FileUpdater.updateHallOfFame(ruleReactions, totalReactions, tempHallFile);
       Assertions.assertTrue(result, 'Should successfully complete Hall of Fame workflow');
       
       // Verify the updates
@@ -295,7 +295,7 @@ ${FileUpdater.MARKERS.HALL_RULE_START('test/production-test-rule')}
 - 👍 **5** | ❤️ **2** | 🚀 **1** | 👀 **1** | 😕 **0**
 ${FileUpdater.MARKERS.HALL_RULE_END('test/production-test-rule')}`;
     
-    const hallFile = path.join(process.cwd(), 'HALL_OF_FAME.md');
+    const hallFile = path.join(__dirname, '../fixtures/temp-hall-of-fame-e2e.md');
     fs.writeFileSync(hallFile, initialHallContent);
     
     try {
@@ -317,7 +317,7 @@ ${FileUpdater.MARKERS.HALL_RULE_END('test/production-test-rule')}`;
       const hallReactions = {
         'test/production-test-rule': newReactions
       };
-      const hallResult = FileUpdater.updateHallOfFame(hallReactions, 150);
+      const hallResult = FileUpdater.updateHallOfFame(hallReactions, 150, hallFile);
       Assertions.assertTrue(hallResult, 'Should update Hall of Fame successfully');
       
       // 6. Verify both files were updated correctly

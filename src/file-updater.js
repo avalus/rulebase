@@ -69,11 +69,10 @@ class FileUpdater {
    * Update HALL_OF_FAME.md with reaction statistics using markers
    * @param {Object} ruleReactions - Object mapping rule keys to reaction data
    * @param {number} totalReactions - Total reactions across all rules
+   * @param {string} [hallOfFamePath='HALL_OF_FAME.md'] - Optional custom path to Hall of Fame file
    * @returns {boolean} True if update was successful, false otherwise
    */
-  static updateHallOfFame(ruleReactions, totalReactions) {
-    const hallOfFamePath = 'HALL_OF_FAME.md';
-    
+  static updateHallOfFame(ruleReactions, totalReactions, hallOfFamePath = 'HALL_OF_FAME.md') {
     if (!fs.existsSync(hallOfFamePath)) {
       console.log(`❌ ${hallOfFamePath} not found`);
       return false;
