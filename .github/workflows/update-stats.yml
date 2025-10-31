@@ -54,5 +54,8 @@ jobs:
           else
             git add HALL_OF_FAME.md rules/**/README.md
             git commit -m "Auto-update reaction statistics [skip ci]"
-            git push
+            
+            # Pull any remote changes before pushing to avoid conflicts
+            git pull --rebase origin main
+            git push origin main
           fi
