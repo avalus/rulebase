@@ -35,11 +35,9 @@ class ReactionCollector {
    */
   async getRuleReactions(owner, repo, filePath) {
     try {
-      const ruleKey = filePath.replace('rules/', '').replace('/README.md', '');
-      const folderName = ruleKey.split('/').pop(); // e.g., "smart-code-reviewer"
+      const ruleKey = filePath.replace('rules/', '').replace('/README.md', ''); // e.g., "coding/smart-code-reviewer"
       const ruleName = await this.extractRuleNameFromReadme(owner, repo, filePath); // e.g., "Smart Code Reviewer"
-      const ruleCategory = ruleKey.split('/')[0]; // e.g., "coding"
-      console.log(`Fetching reactions for rule: ${ruleKey} (name: "${ruleName}", folder: "${folderName}", category: ${ruleCategory})`);
+      console.log(`Fetching reactions for rule: ${ruleKey} (name: "${ruleName}")`);
       
       let totalReactions = {
         thumbsUp: 0,
@@ -53,10 +51,10 @@ class ReactionCollector {
         total: 0
       };
 
-      // Strategy 1: Search for issues/PRs that mention this rule in the title
+      // Strategy 1: Search for issues/PRs that mention this rule in the title or body
       const searchQueries = [
         `repo:${owner}/${repo} "${ruleName}" in:title`,
-        `repo:${owner}/${repo} "${folderName}" in:title`,
+        `repo:${owner}/${repo} "${ruleKey}" in:body`,
       ];
 
       for (const query of searchQueries) {
@@ -101,7 +99,7 @@ class ReactionCollector {
         }
       }
 
-      // Strategy 2: Look for discussions that mention this rule in the title
+      // Strategy 2: Look for discussions that mention this rule in the title or body
       try {
         const discussionQuery = `
           query($owner: String!, $repo: String!) {
@@ -133,15 +131,11 @@ class ReactionCollector {
 
         const discussionData = await this.githubAPI.graphql(discussionQuery, { owner, repo });
         
-        if (discussionData.repository?.discussions?.nodes) {
-          // Define lowercase variables for comparison
-          const ruleNameLower = ruleName.toLowerCase();
-          const folderNameLower = folderName.toLowerCase();
-          
+        if (discussionData.repository?.discussions?.nodes) {          
           for (const discussion of discussionData.repository.discussions.nodes) {
-            // Check if discussion title mentions the rule
-            const mentionsRule = discussion.title.toLowerCase().includes(ruleNameLower) ||
-                                 discussion.title.toLowerCase().includes(folderNameLower);
+            // Check if discussion body mentions the rule
+            const mentionsRule = discussion.title.toLowerCase().includes(ruleName.toLowerCase()) ||
+                                 discussion.body.includes(ruleKey);
             
             if (mentionsRule) {
               // Add discussion reactions

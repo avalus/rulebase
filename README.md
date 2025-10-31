@@ -25,22 +25,6 @@ Rulebase is a curated collection of AI agent rules that have been tested and ref
 4. Follow the setup instructions in each rule's README
 5. 👍 Provide feedback using GitHub reactions!
 
-### Contributing Your Rules
-Have an amazing AI agent rule? Share it with the community!
-1. Fork this repository
-2. Add your rule following our [Contribution Guidelines](./CONTRIBUTING.md)
-3. Submit a pull request
-4. Get feedback and see your rule help thousands of developers!
-
-## 👍 Reaction System
-
-We use GitHub reactions to gather community feedback on rules:
-- 👍 **Thumbs Up** - Works great, recommended!
-- ❤️ **Heart** - Love this rule, essential for my workflow
-- 🚀 **Rocket** - Game-changer, significantly improved productivity  
-- 👀 **Eyes** - Interesting, want to try this
-- 😕 **Confused** - Needs improvement or clarification
-
 **Popular rules** with positive community feedback are featured in our [Hall of Fame](./HALL_OF_FAME.md).
 
 ## 📚 Available Rules
@@ -48,14 +32,9 @@ We use GitHub reactions to gather community feedback on rules:
 Browse all available rules in the **[rules directory](./rules/)** - organized by category:
 
 - **🔧 [Coding](./rules/coding/)** - Code review and development assistants
-- **✍️ [Content](./rules/content/)** - Writing and documentation tools  
-- **📊 [Data Analysis](./rules/data-analysis/)** - Data processing and insights
+- We’re just kicking off - more categories coming soon.
 
 Each rule includes detailed documentation and usage examples.
-
-## 🏆 Popular Rules
-
-Check out our [Hall of Fame](./HALL_OF_FAME.md) to see the most appreciated rules by the community!
 
 ## 🤝 Contributing
 

@@ -32,20 +32,17 @@ Before submitting a rule, ensure it meets these criteria:
 
 ✅ **Functionality**
 - Rule works as described
-- Includes proper error handling
 - Has been tested in real scenarios
 - Provides clear, actionable outputs
 
 ✅ **Documentation**
-- Complete README with examples
-- Clear installation instructions
-- Usage examples and configuration options
-- Proper metadata and versioning
+- Complete README with usage examples
+- Clear installation instructions if required
+- Proper metadata (contributor, tags, license, ...)
 
 ✅ **Structure**
-- Follows the standard rule format
-- Includes both YAML configuration and README
-- Proper file organization
+- Follows the standard folder structure
+- Includes both rule file(s) and README
 - Consistent naming conventions
 
 ✅ **Originality**
@@ -56,10 +53,10 @@ Before submitting a rule, ensure it meets these criteria:
 ### Licensing
 
 **For Original Rules:**
-By contributing original rules to Rulebase, you agree that your contributions will be licensed under the same [MIT License](LICENSE) as the main project.
+By contributing original rules to Rulebase, you agree that if no license is specified in the rule's metadata, your contributions will be licensed under the same [MIT License](LICENSE) as the main project.
 
 **For Rules from Other Projects:**
-Rules copied or adapted from other projects must use compatible open-source licenses. Include the original licensing information in the rule's metadata (see rule template below). Non-MIT licensed rules will be clearly marked in the repository.
+Rules copied or adapted from other projects must use compatible open-source licenses. Include the original licensing information in the rule's metadata (see rule template below).
 
 ### Rule Categories
 
@@ -75,6 +72,7 @@ Choose the appropriate category for your rule:
 - **`security/`** - Security analysis, vulnerability detection
 - **`testing/`** - Quality assurance, test automation
 - **`design/`** - UI/UX, visual design, prototyping
+- **`[new category]/`** - Suggest a new category because none fits your rule
 
 ## 📁 Rule Structure
 
@@ -87,7 +85,7 @@ rules/
 └── category/
     └── rule-name/
         ├── README.md          # Basic rule information and overview
-        └── rule-name.md       # Complete rule in Markdown format
+        └── rule-name.md       # Complete rule in Markdown or any other format
 ```
 
 ### README.md Template
@@ -103,8 +101,10 @@ Use this template for your rule documentation:
 - "[Example prompt 1 showing how to use this rule]"
 - "[Example prompt 2 demonstrating another use case]"
 
-## Rule Metadata
+## Additional Information
 - Contributor: [@your-github-username](https://github.com/your-github-username)
+- Tags: [tag1, tag2, tag3] (e.g., use cases, frameworks, languages, ...)
+- License: [License Type] (e.g., MIT, Apache 2.0)
 - Original Author: [Name] (if applicable)
 - Original Project: [Project Name](https://project-url) (if applicable)
 - Original License: [License Type] (if applicable)
@@ -117,7 +117,7 @@ Use this template for your rule documentation:
 
 ### Current Community Reactions
 <!-- STATS_START -->
-👍 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | **Total: 0 reactions**
+👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **0** | **Total: 0 reactions**
 <!-- STATS_END -->
 
 *This section is automatically updated by our community feedback system.*
@@ -175,7 +175,6 @@ git push origin add-your-rule-name
 - **Attribution** - Your GitHub profile linked in rule documentation
 - **Hall of Fame** - Top contributors featured prominently
 - **Community Status** - Recognition as a valued community member
-- **Early Access** - Preview new features and provide feedback
 
 ### Top Contributor Program
 
@@ -196,11 +195,11 @@ A: Suggest a new category in your PR. We're open to expanding categories based o
 A: Yes! Improvements to existing rules are welcome. Submit a PR with clear explanations of your changes.
 
 **Q: How do I handle rule dependencies?**
-A: Document all dependencies clearly in your README and consider including installation scripts.
+A: Document all dependencies clearly in your README and consider including installation instructions.
 
 ## 🎉 Welcome to the Community!
 
-We're excited to have you contribute to Rulebase! Your rules and improvements help thousands of developers worldwide build better AI agents and workflows.
+We're excited to have you contribute to Rulebase! Your rules and improvements help thousands of developers worldwide building better solutions using AI agents and workflows.
 
 **Ready to contribute?** Start by exploring existing rules, then share your own amazing creations! 🚀
 

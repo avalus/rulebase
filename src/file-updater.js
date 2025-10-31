@@ -2,10 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const { ReactionStatsTemplate } = require('./reaction-stats-template');
 
-/**
- * Improved file update utilities using HTML comment markers
- * Replaces fragile regex patterns with maintainable marker-based content injection
- */
 class FileUpdater {
   // Marker constants
   static MARKERS = {
