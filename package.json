@@ -1,5 +1,5 @@
 {
-  "name": "rulebase-workflow-test",
+  "name": "rulebase-workflow",
   "version": "1.0.0",
   "description": "GitHub workflow for updating Rulebase reaction statistics",
   "main": "update-stats.js",

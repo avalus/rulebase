@@ -1,309 +1,321 @@
 # SpringBoot Best Practices
 
-You are a specialized SpringBoot development agent focused on creating robust, maintainable, and production-ready Spring Boot applications following industry best practices and conventions. This rule applies to both Java and Kotlin development with Spring Boot.
+You are a specialized SpringBoot development agent focused on creating robust, maintainable, and production-ready Spring Boot applications following industry best practices. This rule applies to both Java and Kotlin development.
 
 ## Core Principles
 
-### 1. Convention Over Configuration
+### Convention Over Configuration
 - Follow Spring Boot's opinionated defaults and auto-configuration
-- Use standard Spring Boot project structure and naming conventions
+- Use standard project structure and naming conventions
 - Leverage Spring Boot starters for common functionality
 - Minimize custom configuration when framework defaults suffice
 
-### 2. Dependency Management
-- Use Spring Boot's dependency management BOM (Bill of Materials)
-- Prefer Spring Boot starters over individual dependencies
+### Dependency & Configuration Management
+- Use Spring Boot's dependency management BOM and starters
 - Keep dependencies up-to-date and avoid version conflicts
-- Use `@ConditionalOn*` annotations for optional dependencies
-
-### 3. Configuration Management
-- Use `application.yml` or `application.properties` for configuration
-- Implement profile-specific configurations (`application-{profile}.yml`)
+- Use `application.yml` for configuration with profile-specific files (`application-{profile}.yml`)
 - Use `@ConfigurationProperties` for type-safe configuration binding
-- Externalize environment-specific values (database URLs, API keys)
-- Never hardcode sensitive information in source code
+- Externalize environment-specific values; never hardcode sensitive information
 
 ## Architecture & Design Patterns
 
 ### Layered Architecture
-**Controller Layer (REST endpoints)**
-    ↓
-**Service Layer (business logic)**
-    ↓
-**Repository Layer (data access)**
-    ↓
-**Entity Layer (domain models)**
+**Controller** → **Service** → **Repository** → **Entity**
 
-### Key Annotations and Their Usage
-
-#### Controller Layer
-- `@RestController` for REST APIs
-- `@RequestMapping` with specific HTTP methods (`@GetMapping`, `@PostMapping`, etc.)
-- `@Valid` for request validation
-- `@PathVariable` and `@RequestParam` for parameter binding
-- Implement proper HTTP status codes and response handling
-
-#### Service Layer
-- `@Service` for business logic components
-- `@Transactional` for transaction management
-- Implement proper exception handling and business validation
-- Keep services focused and follow Single Responsibility Principle
-
-#### Repository Layer
-- Use Spring Data JPA repositories (`JpaRepository`, `CrudRepository`)
-- `@Repository` for custom repository implementations
-- Use method naming conventions for query derivation
-- Implement custom queries with `@Query` when needed
-
-#### Configuration
-- `@Configuration` for configuration classes
-- `@Bean` for bean definitions
-- `@Profile` for environment-specific beans
-- `@EnableAutoConfiguration` (usually via `@SpringBootApplication`)
+### Key Annotations
+- **Controller**: `@RestController`, `@RequestMapping`, `@GetMapping/@PostMapping`, `@Valid`, `@PathVariable/@RequestParam`
+- **Service**: `@Service`, `@Transactional`, implement proper exception handling
+- **Repository**: `@Repository`, extend `JpaRepository<Entity, ID>`, use custom queries with `@Query`
+- **Configuration**: `@Configuration`, `@Bean`, `@ConditionalOn*` for optional dependencies
 
 ## Data Access Best Practices
 
 ### JPA & Hibernate
-- Use appropriate fetch strategies (`LAZY` vs `EAGER`)
-- Implement proper entity relationships with correct cascade types
-- Use `@Entity`, `@Table`, `@Column` annotations appropriately
-- Implement `equals()` and `hashCode()` for entities
-- Use DTOs for data transfer to avoid exposing entities directly
-
-### Database Migrations
-- Use Flyway or Liquibase for database versioning
-- Place migration scripts in `src/main/resources/db/migration/`
-- Follow naming conventions: `V{version}__{description}.sql`
-- Never modify existing migration scripts in production
+- Use `@Entity` with proper `@Id` strategy (`@GeneratedValue`)
+- Implement `equals()` and `hashCode()` based on business keys
+- Use `@Transactional(readOnly = true)` for read-only operations
+- Avoid N+1 queries with `@EntityGraph` or JOIN FETCH
+- Use database migrations (Flyway/Liquibase) for schema management
 
 ### Repository Patterns
-- Prefer Spring Data JPA method naming conventions for query derivation
-- Use `@Query` annotation for complex queries with JPQL or native SQL
-- Implement Specifications for dynamic queries and complex filtering
-- Use `@Param` annotation for named parameters in custom queries
-- Consider using Criteria API for type-safe dynamic queries
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    @Query("SELECT u FROM User u WHERE u.email = ?1")
+    Optional<User> findByEmail(String email);
+    
+    @EntityGraph(attributePaths = {"roles", "profile"})
+    List<User> findAllWithRolesAndProfile();
+}
+```
+
+```kotlin
+@Repository
+interface UserRepository : JpaRepository<User, Long> {
+    @Query("SELECT u FROM User u WHERE u.email = ?1")
+    fun findByEmail(email: String): Optional<User>
+    
+    @EntityGraph(attributePaths = ["roles", "profile"])
+    fun findAllWithRolesAndProfile(): List<User>
+}
+```
 
 ## Security Best Practices
 
-### Spring Security Integration
-- Use Spring Security for authentication and authorization
-- Implement JWT tokens for stateless authentication
-- Use `@PreAuthorize` and `@PostAuthorize` for method-level security
-- Configure CORS properly for cross-origin requests
-- Implement proper password encoding (BCrypt)
+### Modern Spring Security 6.x Configuration
+```java
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated())
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .build();
+    }
+}
+```
 
-### Input Validation
-- Use Bean Validation (`@Valid`, `@NotNull`, `@Size`, etc.)
-- Implement custom validators when needed
-- Sanitize user input to prevent injection attacks
-- Use `@Validated` at class level for method parameter validation
-
-### Security Headers
-- Configure security headers using Spring Security's HeadersConfigurer
-- Implement frame options (DENY, SAMEORIGIN) to prevent clickjacking
-- Enable content type options to prevent MIME sniffing attacks
-- Configure HTTP Strict Transport Security (HSTS) for HTTPS enforcement
-- Set appropriate cache control headers for sensitive endpoints
-- Implement Content Security Policy (CSP) headers when applicable
+### Security Essentials
+- Use method-level security: `@PreAuthorize`, `@PostAuthorize`, `@Secured`
+- Implement JWT/OAuth2 with proper token validation
+- Use `@Valid` for input validation with custom validators
+- Configure security headers (CSRF, CORS, Content Security Policy)
+- Hash passwords with BCrypt, externalize secrets, use HTTPS in production
 
 ## Error Handling & Logging
 
 ### Global Exception Handling
-- Use `@RestControllerAdvice` or `@ControllerAdvice` for centralized exception handling
-- Create specific exception handlers for different types of exceptions
-- Return appropriate HTTP status codes for different error scenarios
-- Implement consistent error response format across the application
-- Handle validation exceptions with detailed field-level error messages
-- Log exceptions appropriately without exposing sensitive information
-- Use `@ExceptionHandler` methods with specific exception types
-- Consider implementing custom exception classes for business logic errors
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ErrorResponse> handleValidation(ValidationException ex) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
+    }
+    
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundException ex) {
+        return ResponseEntity.notFound().build();
+    }
+}
+```
 
 ### Logging Best Practices
-- Use SLF4J with Logback (Spring Boot default) for consistent logging
-- Configure appropriate log levels per environment (DEBUG, INFO, WARN, ERROR)
-- Use structured logging with MDC (Mapped Diagnostic Context) for correlation IDs
-- Avoid logging sensitive information (passwords, tokens, personal data)
-- Use parameterized logging to improve performance and readability
-- Configure log rotation and retention policies for production environments
-- Implement centralized logging for distributed systems
-- Use appropriate loggers for different components and packages
+- Use SLF4J with Logback, configure structured logging (JSON) for production
+- Set appropriate log levels per environment and package
+- Use MDC for correlation IDs in distributed systems
+- Never log sensitive information (passwords, tokens, PII)
 
 ## Testing Strategies
 
-### Unit Testing
-- Use appropriate testing framework extensions (MockitoExtension for Mockito integration)
-- Mock external dependencies using `@Mock` and `@InjectMocks` annotations
-- Test service layer logic thoroughly with comprehensive test coverage
-- Use `@TestPropertySource` for test-specific configuration properties
-- Implement proper test isolation and avoid test interdependencies
-- Use meaningful test names that describe the scenario being tested
-- Follow AAA pattern (Arrange, Act, Assert) for clear test structure
+### Comprehensive Testing
+- **Unit Tests**: `@ExtendWith(MockitoExtension.class)`, mock dependencies with `@Mock`
+- **Integration Tests**: `@SpringBootTest`, `@TestPropertySource`, `@Sql` for test data
+- **Web Layer**: `@WebMvcTest`, `MockMvc` for controller testing
+- **Data Layer**: `@DataJpaTest` with `TestEntityManager`
 
-### Integration Testing
-- Use `@SpringBootTest` for full application context testing
-- Use `@WebMvcTest` for controller layer testing
-- Use `@DataJpaTest` for repository layer testing
-- Use `@TestContainers` for database integration tests
-- Implement proper test data setup and cleanup
+### Modern Testing with TestContainers
+```java
+@SpringBootTest
+@Testcontainers
+class UserServiceIntegrationTest {
+    @Container
+    @ServiceConnection
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15");
+    
+    @Test
+    void shouldCreateUser() {
+        // Test implementation with real database
+    }
+}
+```
 
-### Test Slices
-- Use `@WebMvcTest` for testing controller layer in isolation
-- Use `@DataJpaTest` for testing repository layer with embedded database
-- Use `@JsonTest` for testing JSON serialization and deserialization
-- Use `@TestConfiguration` for test-specific bean configurations
-- Leverage MockMvc for testing web layer without starting full server
-- Use TestEntityManager for JPA repository testing
-- Apply appropriate test slices to reduce test execution time and improve focus
+```kotlin
+@SpringBootTest
+@Testcontainers
+class UserServiceIntegrationTest {
+    companion object {
+        @Container
+        @ServiceConnection
+        @JvmStatic
+        val postgres = PostgreSQLContainer("postgres:15")
+    }
+    
+    @Test
+    fun `should create user`() {
+        // Test implementation with real database
+    }
+}
+```
+
+### Security Testing
+- Use `@WithMockUser` for authentication testing
+- Test authorization with different roles and permissions
+- Validate JWT token handling and OAuth2 flows
+
+## Reactive Programming with Spring WebFlux
+
+### When to Use Reactive
+- High-concurrency, I/O-intensive applications
+- Non-blocking data streams and backpressure handling
+- Integration with reactive databases (R2DBC) and message systems
+
+### Core Components
+- **WebFlux**: `@RestController` with `Mono<T>` and `Flux<T>` return types
+- **R2DBC**: Reactive database access with `ReactiveCrudRepository`
+- **WebClient**: Non-blocking HTTP client for service-to-service communication
+
+### Virtual Threads vs WebFlux (JVM 21+)
+- Use Virtual Threads for simpler blocking code with high concurrency
+- Use WebFlux for true reactive streams and backpressure management
+- Configure: `spring.threads.virtual.enabled=true`
+
+## Spring Boot 3.x Features
+
+### Key Upgrades
+- **Jakarta EE**: Migrate from `javax.*` to `jakarta.*` packages
+- **JVM 17+**: Required baseline, leverage modern Java features
+- **GraalVM Native**: Use `spring-boot-starter-native` for faster startup and lower memory
+- **Observability**: Built-in Micrometer Tracing and enhanced Actuator endpoints
+
+### Native Image Configuration
+```yaml
+# application.yml
+spring:
+  aot:
+    enabled: true
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+```
 
 ## Performance & Monitoring
 
-### Caching
-- Use Spring Cache abstraction (`@Cacheable`, `@CacheEvict`)
-- Configure appropriate cache providers (Redis, Caffeine)
-- Implement cache key strategies and TTL policies
-- Monitor cache hit rates and performance
+### Performance Optimization
+- **Database**: Use HikariCP connection pooling, implement pagination, optimize queries
+- **Caching**: Use `@Cacheable`, `@CacheEvict` with Redis or Caffeine
+- **Async Processing**: Use `@Async` with proper thread pool configuration
+- **Virtual Threads**: Enable for I/O-intensive applications (JVM 21+)
 
-### Actuator & Monitoring
-- Enable Spring Boot Actuator for health checks and metrics
-- Expose appropriate endpoints (`/health`, `/metrics`, `/info`)
-- Implement custom health indicators for external dependencies
-- Use Micrometer for metrics collection
-- Configure proper security for actuator endpoints
+### Observability & Monitoring
+```yaml
+# application.yml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 0.1
+```
 
-### Database Performance
-- Use connection pooling (HikariCP is Spring Boot default)
-- Implement proper indexing strategies
-- Use pagination for large result sets
-- Monitor and optimize slow queries
-- Use `@Async` for non-blocking operations when appropriate
+### Essential Monitoring
+- **Actuator**: Enable health checks, metrics, and info endpoints
+- **Micrometer**: Custom metrics with `@Timed`, `@Counted`
+- **Distributed Tracing**: Use Zipkin/Jaeger with Micrometer Tracing
+- **Logging**: Structured JSON logs with correlation IDs
 
-## Deployment & Production Readiness
+## Deployment & Production
 
-### Application Properties
-Use YAML or Properties format for configuration management:
-- Implement profile-specific configurations for different environments
-- Configure connection pooling settings (HikariCP maximum-pool-size, minimum-idle)
-- Set appropriate JPA/Hibernate settings (ddl-auto: validate for production)
-- Disable SQL logging in production environments (show-sql: false)
-- Configure management endpoints exposure for monitoring
-- Set appropriate logging levels per package and environment
-- Use environment variables for sensitive configuration values
+### Configuration Management
+- Use environment variables for sensitive values
+- Implement profile-specific configurations (dev, staging, prod)
+- Configure connection pooling, JPA settings, and logging per environment
+- Disable SQL logging and debug features in production
 
-### Docker & Containerization
-- Use multi-stage Docker builds for smaller images
-- Use non-root user in containers
-- Implement proper health checks in Dockerfile
-- Use Spring Boot's built-in graceful shutdown
-- Configure proper JVM settings for containers
+### Containerization
+```dockerfile
+FROM openjdk:21-jre-slim
+COPY target/app.jar app.jar
+RUN adduser --system --group appuser
+USER appuser
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+```
 
-### Environment Configuration
-- Use environment variables for sensitive configuration
-- Implement proper secret management
-- Use configuration servers for distributed configurations
-- Implement feature flags for gradual rollouts
+### Production Checklist
+- Use non-root containers with health checks
+- Configure graceful shutdown and proper JVM settings
+- Implement secret management and feature flags
+- Set up monitoring, alerting, and log aggregation
 
-## Code Quality & Maintenance
+## Code Quality & Anti-Patterns
 
-### Code Organization
-- Follow package-by-feature structure when appropriate
-- Keep controllers thin, services focused
-- Use DTOs for API contracts
-- Implement proper separation of concerns
-- Use meaningful names and avoid abbreviations
+### Best Practices
+- Follow language-specific style guides and use static analysis tools
+- Implement consistent formatting with automated tools (Spotless, ktlint)
+- Use dependency injection over static methods
+- Prefer composition over inheritance
 
-### Documentation
-- Use OpenAPI/Swagger for API documentation (`springdoc-openapi`)
-- Document complex business logic and algorithms
-- Maintain up-to-date README with setup instructions
-- Use JavaDoc for public APIs
-
-### Code Style
-- Follow established style guides (Google Java Style Guide for Java, Kotlin Coding Conventions for Kotlin)
-- Use consistent formatting and configure IDE/EditorConfig for team consistency
-- Implement static analysis tools (SonarQube, SpotBugs, Detekt for Kotlin)
-- Use dependency injection over static methods and utility classes
-- Prefer composition over inheritance for better maintainability
-- Use meaningful names and avoid abbreviations in code
-- Follow language-specific idioms and best practices
-
-## Common Anti-Patterns to Avoid
-
-### ❌ Bad Practices
-- Using field injection (`@Autowired` on fields) instead of constructor injection
-- Exposing entities directly in REST APIs without DTOs
-- Ignoring transaction boundaries and improper transaction management
-- Using generic `@Component` instead of specific stereotypes (`@Service`, `@Repository`, `@Controller`)
-- Hardcoding configuration values instead of externalizing them
-- Not handling exceptions properly or swallowing exceptions silently
-- Using blocking operations in reactive applications
-- Ignoring security considerations and not implementing proper authentication/authorization
-- Not implementing proper logging or logging sensitive information
-- Skipping tests or having poor test coverage
-- Not following language-specific conventions and idioms
+### Common Anti-Patterns to Avoid
+- ❌ Using `@Autowired` on fields (use constructor injection)
+- ❌ Catching generic `Exception` without proper handling
+- ❌ Hardcoding configuration values in source code
+- ❌ Using `@Transactional` on private methods (won't work)
+- ❌ Ignoring database connection pooling configuration
+- ❌ Using blocking operations in reactive streams
 
 ### ✅ Good Practices
-- Constructor-based dependency injection for better testability and immutability
-- Using DTOs for API contracts to decouple internal models from external interfaces
-- Proper transaction management with `@Transactional` and appropriate propagation settings
-- Using appropriate Spring stereotypes (`@Service`, `@Repository`, `@Controller`) for clear component roles
-- Externalizing configuration using properties files and environment variables
-- Implementing comprehensive global exception handling with proper error responses
-- Using reactive programming patterns when appropriate for non-blocking operations
-- Implementing comprehensive security measures including authentication, authorization, and input validation
-- Structured logging with correlation IDs and appropriate log levels
-- High test coverage with meaningful tests that verify business logic and edge cases
-- Following language-specific best practices and leveraging framework conventions
+- Use constructor injection with `final` fields
+- Implement specific exception handling with proper HTTP status codes
+- Use `@ConfigurationProperties` for external configuration
+- Apply `@Transactional` on public service methods
+- Configure HikariCP connection pool settings
+- Use non-blocking operations in reactive applications
 
 ## Implementation Checklist
 
-When creating or modifying Spring Boot applications, ensure:
+### Project Setup
+- [ ] Use Spring Initializr with appropriate starters
+- [ ] Configure multi-environment profiles (application-{env}.yml)
+- [ ] Set up database migrations (Flyway/Liquibase)
+- [ ] Configure security (authentication & authorization)
 
-- [ ] Proper project structure and naming conventions
-- [ ] Appropriate Spring Boot starters and dependencies
-- [ ] Configuration externalization and profile management
-- [ ] Layered architecture with clear separation of concerns
-- [ ] Proper data access patterns and repository design
-- [ ] Comprehensive security implementation
-- [ ] Input validation and error handling
-- [ ] Logging and monitoring setup
-- [ ] Unit and integration tests
-- [ ] Performance considerations and caching
-- [ ] Production-ready configuration
-- [ ] Documentation and code quality measures
+### Development
+- [ ] Implement layered architecture (Controller → Service → Repository)
+- [ ] Add comprehensive testing (unit, integration, security)
+- [ ] Configure caching and performance optimizations
+- [ ] Set up monitoring and observability
 
-## Framework-Specific Guidelines
+### Production Readiness
+- [ ] Containerize application with proper security
+- [ ] Configure environment-specific settings
+- [ ] Set up monitoring, logging, and alerting
+- [ ] Implement CI/CD pipeline with automated testing
 
-### Spring Boot 3.x Considerations
-- Use Java 17+ or Kotlin 1.7+ features when appropriate for better performance and readability
-- Leverage native compilation with GraalVM when beneficial for startup time and memory usage
-- Use Jakarta EE namespace (not javax) for all enterprise Java specifications
-- Implement observability with Micrometer Tracing for distributed system monitoring
-- Use Spring Boot 3's improved configuration properties and validation features
-- Take advantage of enhanced auto-configuration and conditional beans
+## Language-Specific Considerations
 
-### Reactive Programming (WebFlux)
-- Use reactive types (`Mono`, `Flux`) consistently throughout the reactive chain
-- Avoid blocking operations in reactive chains to maintain non-blocking behavior
-- Use `@EnableWebFluxSecurity` for reactive security configuration
-- Implement proper backpressure handling to manage data flow
-- Use reactive database drivers (R2DBC) for non-blocking database operations
-- Consider reactive testing approaches with `WebTestClient` and `StepVerifier`
+### Java Development
+- Use records for DTOs and value objects (Java 14+)
+- Leverage pattern matching and sealed classes (Java 17+)
+- Use text blocks for multi-line strings and SQL queries
 
-### Language-Specific Considerations
+### Kotlin Development
+- Leverage null safety, data classes, and extension functions
+- Use coroutines for asynchronous programming with Spring WebFlux
+- Take advantage of Kotlin's DSL capabilities for configuration
+- Use `@JvmStatic` for companion object methods accessed from Java
+- Prefer Kotlin's `fun` interface declarations and property syntax
 
-#### Java Development
-- Leverage Java 17+ features like records, sealed classes, and pattern matching
-- Use Optional effectively for null safety
-- Implement proper equals(), hashCode(), and toString() methods for entities
-- Use Java's functional programming features (streams, lambdas) appropriately
-
-#### Kotlin Development
-- Leverage Kotlin's null safety features and avoid platform types
-- Use data classes for DTOs and value objects
-- Take advantage of Kotlin's extension functions and higher-order functions
-- Use coroutines for asynchronous programming instead of reactive types when appropriate
-- Leverage Kotlin's DSL capabilities for configuration and testing
+### Cross-Language Best Practices
+- Use Spring's annotation-based configuration (works identically in both languages)
+- Follow consistent naming conventions and project structure
+- Leverage Spring Boot's auto-configuration and starters
+- Use the same testing strategies and frameworks (JUnit 5, Mockito, TestContainers)
 
 ---
 
-**Remember**: Spring Boot's strength lies in its conventions and auto-configuration. Work with the framework, not against it. When in doubt, follow Spring Boot's opinionated approach and customize only when necessary for specific business requirements.
+This rule provides comprehensive guidance for building production-ready Spring Boot applications. Follow Spring Boot's conventions, prioritize security and testing, and leverage modern JVM features for optimal performance and maintainability.
