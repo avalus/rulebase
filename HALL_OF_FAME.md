@@ -5,9 +5,9 @@ Welcome to the Rulebase Hall of Fame! This showcases our most popular and effect
 ## 📊 Community Overview
 
 Our community has provided <!-- OVERALL_TOTAL_START -->
-3+ total community reactions
+4+ total community reactions
 <!-- OVERALL_TOTAL_END --> across all rules, with <!-- OVERALL_FEEDBACK_START -->
-67% average positive feedback
+75% average positive feedback
 <!-- OVERALL_FEEDBACK_END -->
 
 ## 🌟 Featured Rules
@@ -17,8 +17,8 @@ Our community has provided <!-- OVERALL_TOTAL_START -->
 Link: [Codebase Planning](rules/coding/codebase-planning/README.md)
 
 <!-- RULE_STATS_START:coding/codebase-planning -->
-- 👍 **0** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **1**
-- **1 total community reactions**
+- 👍 **1** | 👎 **0** | ❤️ **0** | 🚀 **0** | 👀 **0** | 😕 **0** | 😄 **0** | 🎉 **1**
+- **2 total community reactions**
 <!-- RULE_STATS_END:coding/codebase-planning -->
 
 Perfect for: Safely planning changes and features for mission-critical projects.
